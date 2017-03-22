@@ -13,13 +13,20 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('email')->unique();
+        Schema::create('school_users', function (Blueprint $table) {
+            $table->string('username')->primary();
             $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
+            $table->string('email')->unique();
+            $table->string('chinese_name');
+            $table->string('eng_name');
+            $table->string('school_code')->comment('該使用者所屬學校代碼');
+            $table->string('organization')->comment('該使用者所屬系所');
+            $table->string('office_phone')->comment('聯絡電話');
+            $table->boolean('school_data_edit')->comment('是否可編輯學校資料');
+            $table->boolean('student_data_read')->comment('是否可讀取報名學生資料');
+            $table->string('created_at');
+            $table->string('updated_at');
+            $table->string('deleted_at')->nullable();
         });
     }
 
@@ -30,6 +37,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('school_users');
     }
 }
