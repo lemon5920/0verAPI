@@ -19,7 +19,7 @@ class CreateSchoolDataTable extends Migration
             $table->string('phone');
             $table->string('fax');
             $table->string('homepage');
-            $table->string('organization');
+            $table->string('organization')->comment('負責僑生事務的單位');
             $table->string('undergraduate_memo');
             $table->string('master_memo');
             $table->string('associate_memo');
