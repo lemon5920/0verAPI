@@ -15,7 +15,7 @@ class CreateSystemDataTable extends Migration
     {
         Schema::create('system_data', function (Blueprint $table) {
             $table->string('school_code')->comment('學校代碼');
-            $table->string('type')->comment('學制種類（學士, 碩士, 二技, 博士）');
+            $table->string('system')->comment('學制種類（學士, 碩士, 二技, 博士）');
             $table->integer('quantity_of_overseas')->comment('僑生可招收數量');
             $table->integer('surplus')->comment('上學年本地生未招足名額（二技參照學士）');
             $table->integer('expanded')->comment('本學年教育部核定擴增名額（二技參照學士）');
@@ -25,7 +25,7 @@ class CreateSystemDataTable extends Migration
             $table->string('created_at');
             $table->string('updated_at');
             $table->string('deleted_at')->nullable();
-            $table->primary(['school_code', 'type']);
+            $table->primary(['school_code', 'system']);
         });
     }
 
