@@ -23,7 +23,7 @@ class CreateSystemDataI18nTable extends Migration
             $table->string('deleted_at')->nullable();
             $table->primary(['school_code', 'system', 'lang']);
 
-        })
+        });
     }
 
     /**
