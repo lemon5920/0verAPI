@@ -14,7 +14,7 @@ class CreateSchoolDataI18nTable extends Migration
     public function up()
     {
         Schema::create('school_data_i18n', function (Blueprint $table) {
-            $table->integer('school_code');
+            $table->string('school_code');
             $table->string('lang');
             $table->string('name')->unique();
             $table->string('address')->unique();
