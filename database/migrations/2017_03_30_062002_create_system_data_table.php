@@ -25,6 +25,7 @@ class CreateSystemDataTable extends Migration
             $table->string('created_at');
             $table->string('updated_at');
             $table->string('deleted_at')->nullable();
+            $table->primary(['school_code', 'type']);
         });
     }
 
@@ -35,6 +36,6 @@ class CreateSystemDataTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('systems');
+        Schema::dropIfExists('system_data');
     }
 }
