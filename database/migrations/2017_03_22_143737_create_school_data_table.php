@@ -14,7 +14,7 @@ class CreateSchoolDataTable extends Migration
     public function up()
     {
         Schema::create('school_data', function (Blueprint $table) {
-            $table->integer('code')->primary()->comment('學校代碼');
+            $table->string('code')->primary()->comment('學校代碼');
             $table->string('type')->comment('「公、私立」與「大學、科大」之組合＋「僑先部」共五種');
             $table->string('phone')->comment('學校聯絡電話（+886-49-2910960#1234）');
             $table->string('fax')->comment('學校聯絡電話（+886-49-2910960#1234）');
