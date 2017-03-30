@@ -14,7 +14,7 @@ class CreateSystemTypesTable extends Migration
     public function up()
     {
         Schema::create('system_types', function (Blueprint $table) {
-            $table->string('systems')->comment('目前可以收學生的學制');
+            $table->string('systems')->primary()->comment('目前可以收學生的學制');
             $table->string('created_at');
             $table->string('updated_at');
             $table->string('deleted_at')->nullable();
