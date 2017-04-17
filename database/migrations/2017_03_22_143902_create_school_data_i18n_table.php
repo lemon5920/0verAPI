@@ -18,6 +18,7 @@ class CreateSchoolDataI18nTable extends Migration
             $table->string('lang');
             $table->string('name')->unique();
             $table->string('address')->unique();
+            $table->string('url')->comment('學校網站網址');
             $table->string('organization')->comment('學校負責僑生事務的承辦單位');
             $table->string('dorm_info')->comment('宿舍說明');
             $table->string('scholarship_info')->comment('獎學金說明');
