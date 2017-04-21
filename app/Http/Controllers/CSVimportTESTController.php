@@ -18,8 +18,10 @@ class CSVimportTESTController extends Controller
             return response()->json(compact('messages'), 400);
         }
 
+        $enctype = mb_detect_encoding(file_get_contents($request->file), 'UTF-8, BIG-5', true);
+
         return Excel::load($request->file, function($reader) {
             // Getting all results
-        })->get();
+        }, $enctype)->get();
     }
 }
