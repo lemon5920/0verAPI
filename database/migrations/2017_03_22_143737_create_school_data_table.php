@@ -14,7 +14,7 @@ class CreateSchoolDataTable extends Migration
     public function up()
     {
         Schema::create('school_data', function (Blueprint $table) {
-            $table->string('code')->primary()->comment('學校代碼');
+            $table->string('id')->primary()->comment('學校代碼');
             $table->string('title')->comment('學校名稱');
             $table->string('engTitle')->comment('學校英文名稱');
             $table->string('address')->comment('學校地址');

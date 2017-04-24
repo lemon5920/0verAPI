@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class SetupUsersTable extends Migration
+class SetupDepartmentDataTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class SetupUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('school_users', function (Blueprint $table) {
+        Schema::table('department_data', function (Blueprint $table) {
             $table->foreign('school_code')->references('id')->on('school_data');
         });
     }
@@ -25,8 +25,8 @@ class SetupUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('school_users', function (Blueprint $table) {
-            $table->dropForeign('school_users_school_code_foreign');
+        Schema::table('department_data', function (Blueprint $table) {
+            $table->dropForeign('department_data_school_code_foreign');
         });
     }
 }

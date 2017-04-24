@@ -14,8 +14,9 @@ class CreateDepartmentDataTable extends Migration
     public function up()
     {
         Schema::create('department_data', function (Blueprint $table) {
-            $table->string('id')->primary()->comment('系所代碼（系統按規則產生）');
-            $table->string('oldcode')->comment('讀卡代碼');
+            $table->string('id')->comment('系所代碼（系統按規則產生）');
+            $table->string('school_code')->comment('學校代碼');
+            $table->string('cardcode')->comment('讀卡代碼');
             $table->string('title')->comment('系所名稱');
             $table->string('engTitle')->comment('系所英文名稱');
             $table->string('choicememo')->comment('選系說明');
@@ -48,6 +49,7 @@ class CreateDepartmentDataTable extends Migration
             $table->boolean('Disabilities')->comment('是否招收身障學生');
             $table->boolean('BuHweiHwaWen')->comment('是否招收不具華文基礎學生');
             $table->string('evaluation')->comment('系所評鑑等級');
+            $table->primary(['id', 'cardcode', 'school_code']);
         });
     }
 
