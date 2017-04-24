@@ -232,7 +232,7 @@ class CSVimportTESTController extends Controller
             $values .= ',"'.$row['僑生編號'].$row['報名序號'].'"';
 
             $keys .= ',password';
-            $values .= ',"'.bcrypt($row['僑生編號'].$row['報名序號']).'"';
+            $values .= ',"'.substr(bcrypt($row['僑生編號'].$row['報名序號']), 0, 40).'"';
 
             $keys .= ',memo2';
             $values .= ',""';
@@ -247,7 +247,7 @@ class CSVimportTESTController extends Controller
             $values .= ',"2017"';
 
             $keys .= ',updateCheck';
-            $values .= ',"Y"';
+            $values .= ',"N"';
 
             $keys .= ',getORnot';
             $values .= ',"A"';
@@ -265,6 +265,9 @@ class CSVimportTESTController extends Controller
 
         $priorities = 70; // 可填的志願數
 
+        $error_less_than_four = '';
+        $error_dept_not_found = '';
+        $error_id_not_found = '';
         // $query = [];
         for ($i = 0; $i < count($priority_obj); $i++) {
             $id = $priority_obj[$i]["准考證號"];
@@ -276,26 +279,29 @@ class CSVimportTESTController extends Controller
                     if ($oldcode == '') {
 
                     } else if (strlen($oldcode) < 4) {
-                        $query .= PHP_EOL.PHP_EOL.PHP_EOL.PHP_EOL.PHP_EOL
-                            .'#vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv'.PHP_EOL
-                            .'#'.$id.'亂畫卡RRRRRRR QAQ （讀卡機無法判讀）'.$oldcode.PHP_EOL
-                            .'#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'
-                            .PHP_EOL.PHP_EOL.PHP_EOL.PHP_EOL.PHP_EOL;
+                        $error_less_than_four .=
+                            '#vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv'.PHP_EOL
+                            .'#'.$id.'亂畫卡RRRRRRR QAQ （讀卡機無法判讀）, 志願序: '.($j + 1).'讀卡結果: '.$oldcode.PHP_EOL
+                            .'#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'.PHP_EOL;
                     } else if (!DB::table('depart')->where('oldcode', $oldcode)->exists()) {
-                        $query .= PHP_EOL.PHP_EOL.PHP_EOL.PHP_EOL.PHP_EOL
-                            .'#vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv'.PHP_EOL
-                            .'#'.$id.'不想唸RRRRRRR QAQ （畫的志願不存在）'.$oldcode.PHP_EOL
-                            .'#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'
-                            .PHP_EOL.PHP_EOL.PHP_EOL.PHP_EOL.PHP_EOL;
+                        $error_dept_not_found .=
+                            '#vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv'.PHP_EOL
+                            .'#'.$id.'不想唸RRRRRRR QAQ （畫的志願不存在）, 志願序: '.($j + 1).'讀卡結果: '.$oldcode.PHP_EOL
+                            .'#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'.PHP_EOL;
                     } else {
                         $query .= 'insert into selection(idcode,oldcode,ser) values("'.$idcode.'","'.$oldcode.'","'.str_pad($j + 1, 2, '0', STR_PAD_LEFT).'");'.PHP_EOL;
                     }
                 }
+            } else {
+                $error_id_not_found .=
+                    '#vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv'.PHP_EOL
+                    .'#'.$id.'找不到RRRRRRR QAQ （讀卡機無法判讀）, 僑生編號: '.$id.PHP_EOL
+                    .'#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'.PHP_EOL;
             }
         }
 
         // $query = array('query_applicant' => $query_applicant, 'query_priority' => $id_to_idcode);
 
-        return $query;
+        return $error_less_than_four.$error_dept_not_found.$error_id_not_found.$query;
     }
 }
