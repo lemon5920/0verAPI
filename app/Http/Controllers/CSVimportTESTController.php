@@ -156,7 +156,6 @@ class CSVimportTESTController extends Controller
                                 $col_value = '000';
                             } else {
                                 $col_value = array_get($country_code, $value);
-                                Log::info($col_value);
                             }
                             break;
 
@@ -201,7 +200,6 @@ class CSVimportTESTController extends Controller
                             break;
                         default:
                             $col_value = $value;
-                            
                             break;
                     }
 
@@ -211,8 +209,6 @@ class CSVimportTESTController extends Controller
                         $keys .= ','.$col_name;
                     }
 
-
-                    Log::info(explode('(', $col_value)[0]);
                     if ($values == '') {
                         if (explode('(', $col_value)[0] == 'aes_encrypt') {
                             $values = $col_value;
@@ -265,36 +261,33 @@ class CSVimportTESTController extends Controller
 
         $priorities = 70; // 可填的志願數
 
-        // $query = [];
-        for ($i = 0; $i < count($priority_obj); $i++) {
-            $id = $priority_obj[$i]["准考證號"];
-            $idcode = array_get($id_to_idcode, (string)$id);
-            if ($idcode) {
+        foreach ($priority_obj as $row1) {
+            $id = $row1["准考證號"];
+            if ( array_has($id_to_idcode, (string)$id) ) {
+                $idcode = array_get($id_to_idcode, (string)$id);
                 for ($j = 0; $j < $priorities; $j++) {
                     $oldcode = trim($priority_obj[$i]['s'.($j + 1)]);
 
-                    if ($oldcode == '') {
-
-                    } else if (strlen($oldcode) < 4) {
-                        $query .= PHP_EOL.PHP_EOL.PHP_EOL.PHP_EOL.PHP_EOL
-                            .'#vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv'.PHP_EOL
-                            .'#'.$id.'亂畫卡RRRRRRR QAQ （讀卡機無法判讀）'.$oldcode.PHP_EOL
-                            .'#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'
-                            .PHP_EOL.PHP_EOL.PHP_EOL.PHP_EOL.PHP_EOL;
-                    } else if (!DB::table('depart')->where('oldcode', $oldcode)->exists()) {
-                        $query .= PHP_EOL.PHP_EOL.PHP_EOL.PHP_EOL.PHP_EOL
-                            .'#vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv'.PHP_EOL
-                            .'#'.$id.'不想唸RRRRRRR QAQ （畫的志願不存在）'.$oldcode.PHP_EOL
-                            .'#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'
-                            .PHP_EOL.PHP_EOL.PHP_EOL.PHP_EOL.PHP_EOL;
-                    } else {
-                        $query .= 'insert into selection(idcode,oldcode,ser) values("'.$idcode.'","'.$oldcode.'","'.str_pad($j + 1, 2, '0', STR_PAD_LEFT).'");'.PHP_EOL;
+                    if (!empty($oldcode)) {
+                        if (strlen($oldcode) < 4) {
+                            $query .= PHP_EOL.PHP_EOL.PHP_EOL.PHP_EOL.PHP_EOL
+                                .'#vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv'.PHP_EOL
+                                .'#'.$id.'亂畫卡RRRRRRR QAQ （讀卡機無法判讀）'.$oldcode.PHP_EOL
+                                .'#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'
+                                .PHP_EOL.PHP_EOL.PHP_EOL.PHP_EOL.PHP_EOL;
+                        } else if (!DB::table('depart')->where('oldcode', $oldcode)->exists()) {
+                            $query .= PHP_EOL.PHP_EOL.PHP_EOL.PHP_EOL.PHP_EOL
+                                .'#vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv'.PHP_EOL
+                                .'#'.$id.'不想唸RRRRRRR QAQ （畫的志願不存在）'.$oldcode.PHP_EOL
+                                .'#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'
+                                .PHP_EOL.PHP_EOL.PHP_EOL.PHP_EOL.PHP_EOL;
+                        } else {
+                            $query .= 'insert into selection(idcode,oldcode,ser) values("'.$idcode.'","'.$oldcode.'","'.str_pad($j + 1, 2, '0', STR_PAD_LEFT).'");'.PHP_EOL;
+                        }
                     }
                 }
             }
         }
-
-        // $query = array('query_applicant' => $query_applicant, 'query_priority' => $id_to_idcode);
 
         return $query;
     }
