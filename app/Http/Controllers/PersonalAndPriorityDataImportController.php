@@ -8,7 +8,7 @@ use Excel;
 use DB;
 use Log;
 
-class CSVimportTESTController extends Controller
+class PersonalAndPriorityDataImportController extends Controller
 {
     public function import(Request $request) {
         $validator = Validator::make($request->all(), [
