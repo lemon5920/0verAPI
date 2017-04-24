@@ -197,7 +197,7 @@ class CSVimportTESTController extends Controller
                         case 'disabilityExplain2':
                         case 'disabilityLevel':
                         case 'province':
-                            $col_value = 'aes_encrypt(\''.$value.'\', \''.$salt.'\')';
+                            $col_value = 'aes_encrypt("'.$value.'", "'.$salt.'")';
                             break;
                         default:
                             $col_value = $value;
@@ -217,40 +217,40 @@ class CSVimportTESTController extends Controller
                         if (explode('(', $col_value)[0] == 'aes_encrypt') {
                             $values = $col_value;
                         } else {
-                            $values = '\''.$col_value.'\'';
+                            $values = '"'.$col_value.'"';
                         }
                     } else {
                         if (explode('(', $col_value)[0] == 'aes_encrypt') {
                             $values .= ','.$col_value;
                         } else {
-                            $values .= ',\''.$col_value.'\'';
+                            $values .= ',"'.$col_value.'"';
                         }
                     }
                 }
             }
             $keys .= ',account';
-            $values .= ',\''.$row['僑生編號'].$row['報名序號'].'\'';
+            $values .= ',"'.$row['僑生編號'].$row['報名序號'].'"';
 
             $keys .= ',password';
-            $values .= ',\''.bcrypt($row['僑生編號'].$row['報名序號']).'\'';
+            $values .= ',"'.bcrypt($row['僑生編號'].$row['報名序號']).'"';
 
             $keys .= ',memo2';
-            $values .= ',\'\'';
+            $values .= ',""';
 
             $keys .= ',holdpassportP_date';
-            $values .= ',\'0000-00-00\'';
+            $values .= ',"0000-00-00"';
 
             $keys .= ',rtime';
-            $values .= ',\''.date('Y-m-d H:i:s').'\'';
+            $values .= ',"'.date('Y-m-d H:i:s').'"';
 
             $keys .= ',applyyear';
-            $values .= ',\'2017\'';
+            $values .= ',"2017"';
 
             $keys .= ',updateCheck';
-            $values .= ',\'Y\'';
+            $values .= ',"Y"';
 
             $keys .= ',getORnot';
-            $values .= ',\'A\'';
+            $values .= ',"A"';
 
             // array_push($query_applicant, 'insert into applicant('.$keys.') values('.$values.');');
             $query .= 'insert into applicant('.$keys.') values('.$values.');'.PHP_EOL;
@@ -288,7 +288,7 @@ class CSVimportTESTController extends Controller
                             .'#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'
                             .PHP_EOL.PHP_EOL.PHP_EOL.PHP_EOL.PHP_EOL;
                     } else {
-                        $query .= 'insert into selection(idcode,oldcode,ser) values(\''.$idcode.'\',\''.$oldcode.'\',\''.str_pad($j + 1, 2, '0', STR_PAD_LEFT).'\');'.PHP_EOL;
+                        $query .= 'insert into selection(idcode,oldcode,ser) values("'.$idcode.'","'.$oldcode.'","'.str_pad($j + 1, 2, '0', STR_PAD_LEFT).'");'.PHP_EOL;
                     }
                 }
             }
