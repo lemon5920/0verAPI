@@ -266,7 +266,7 @@ class CSVimportTESTController extends Controller
             if ( array_has($id_to_idcode, (string)$id) ) {
                 $idcode = array_get($id_to_idcode, (string)$id);
                 for ($j = 0; $j < $priorities; $j++) {
-                    $oldcode = trim($priority_obj[$i]['s'.($j + 1)]);
+                    $oldcode = trim($row1['s'.($j + 1)]);
 
                     if (!empty($oldcode)) {
                         if (strlen($oldcode) < 4) {
