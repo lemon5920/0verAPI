@@ -156,7 +156,6 @@ class CSVimportTESTController extends Controller
                                 $col_value = '000';
                             } else {
                                 $col_value = array_get($country_code, $value);
-                                Log::info($col_value);
                             }
                             break;
 
@@ -201,7 +200,6 @@ class CSVimportTESTController extends Controller
                             break;
                         default:
                             $col_value = $value;
-                            
                             break;
                     }
 
@@ -211,8 +209,6 @@ class CSVimportTESTController extends Controller
                         $keys .= ','.$col_name;
                     }
 
-
-                    Log::info(explode('(', $col_value)[0]);
                     if ($values == '') {
                         if (explode('(', $col_value)[0] == 'aes_encrypt') {
                             $values = $col_value;
@@ -268,28 +264,28 @@ class CSVimportTESTController extends Controller
         $error_less_than_four = '';
         $error_dept_not_found = '';
         $error_id_not_found = '';
-        // $query = [];
-        for ($i = 0; $i < count($priority_obj); $i++) {
-            $id = $priority_obj[$i]["准考證號"];
-            $idcode = array_get($id_to_idcode, (string)$id);
-            if ($idcode) {
+
+        foreach ($priority_obj as $row1) {
+            $id = $row1["准考證號"];
+            if ( array_has($id_to_idcode, (string)$id) ) {
+                $idcode = array_get($id_to_idcode, (string)$id);
                 for ($j = 0; $j < $priorities; $j++) {
-                    $oldcode = trim($priority_obj[$i]['s'.($j + 1)]);
+                    $oldcode = trim($row1['s'.($j + 1)]);
 
-                    if ($oldcode == '') {
-
-                    } else if (strlen($oldcode) < 4) {
-                        $error_less_than_four .=
+                    if (!empty($oldcode)) {
+                        if (strlen($oldcode) < 4) {
+                            $error_less_than_four .=
                             '#vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv'.PHP_EOL
                             .'#'.$id.'亂畫卡RRRRRRR QAQ （讀卡機無法判讀）, 志願序: '.($j + 1).'讀卡結果: '.$oldcode.PHP_EOL
                             .'#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'.PHP_EOL;
-                    } else if (!DB::table('depart')->where('oldcode', $oldcode)->exists()) {
-                        $error_dept_not_found .=
+                        } else if (!DB::table('depart')->where('oldcode', $oldcode)->exists()) {
+                            $error_dept_not_found .=
                             '#vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv'.PHP_EOL
                             .'#'.$id.'不想唸RRRRRRR QAQ （畫的志願不存在）, 志願序: '.($j + 1).'讀卡結果: '.$oldcode.PHP_EOL
                             .'#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'.PHP_EOL;
-                    } else {
-                        $query .= 'insert into selection(idcode,oldcode,ser) values("'.$idcode.'","'.$oldcode.'","'.str_pad($j + 1, 2, '0', STR_PAD_LEFT).'");'.PHP_EOL;
+                        } else {
+                            $query .= 'insert into selection(idcode,oldcode,ser) values("'.$idcode.'","'.$oldcode.'","'.str_pad($j + 1, 2, '0', STR_PAD_LEFT).'");'.PHP_EOL;
+                        }
                     }
                 }
             } else {
@@ -299,8 +295,6 @@ class CSVimportTESTController extends Controller
                     .'#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'.PHP_EOL;
             }
         }
-
-        // $query = array('query_applicant' => $query_applicant, 'query_priority' => $id_to_idcode);
 
         return $error_less_than_four.$error_dept_not_found.$error_id_not_found.$query;
     }
