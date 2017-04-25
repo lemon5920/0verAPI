@@ -49,6 +49,9 @@ class CreateDepartmentDataTable extends Migration
             $table->boolean('Disabilities')->comment('是否招收身障學生');
             $table->boolean('BuHweiHwaWen')->comment('是否招收不具華文基礎學生');
             $table->string('evaluation')->comment('系所評鑑等級');
+            $table->string('created_at');
+            $table->string('updated_at');
+            $table->string('deleted_at')->nullable();
             $table->primary(['id', 'cardcode', 'school_code']);
         });
     }
