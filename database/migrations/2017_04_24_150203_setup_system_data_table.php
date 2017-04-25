@@ -15,7 +15,7 @@ class SetupSystemDataTable extends Migration
     {
         Schema::table('system_data', function (Blueprint $table) {
             $table->foreign('school_code')->references('id')->on('school_data');
-            $table->foreign('system')->references('systems')->on('system_types');
+            $table->foreign('system')->references('type')->on('system_types');
         });
     }
 
