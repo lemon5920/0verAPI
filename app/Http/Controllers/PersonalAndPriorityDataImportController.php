@@ -118,7 +118,7 @@ class PersonalAndPriorityDataImportController extends Controller
             '母親中文姓名' => 'motherChineseName',
             '母親英文姓名' => 'motherEnglishName',
             '母親出生日期' => 'mab',
-            '在台監護(聯絡)人姓名' => 'contactName',
+            '在台監護聯絡人姓名' => 'contactName',
             '在台監護人姓名' => 'contactName',
             '在台聯絡人姓名' => 'contactName',
             '電話' => 'contactPhone',
@@ -222,8 +222,11 @@ class PersonalAndPriorityDataImportController extends Controller
                             $values .= ',"'.$col_value.'"';
                         }
                     }
+                } else {
+                    Log::info($key);
                 }
             }
+
             $keys .= ',account';
             $values .= ',"'.$row['僑生編號'].$row['報名序號'].'"';
 
@@ -239,6 +242,7 @@ class PersonalAndPriorityDataImportController extends Controller
             $keys .= ',rtime';
             $values .= ',"'.date('Y-m-d H:i:s').'"';
 
+            // FIXME: 應由使用者透過 API/UI 輸入
             $keys .= ',applyyear';
             $values .= ',"2017"';
 
@@ -247,6 +251,22 @@ class PersonalAndPriorityDataImportController extends Controller
 
             $keys .= ',getORnot';
             $values .= ',"A"';
+
+            // FIXME: 應由使用者透過 API/UI 輸入
+            $keys .= ',identification';
+            $values .= ',"海外僑生"';
+
+            // 緬甸同學電子檔案沒有最後畢業中學國別，
+            // 不過緬甸同學僅能使用當地文憑，
+            // 故固定為緬甸國碼 106 即可
+            if (substr((string)$row['僑生編號'], 1, 2) == '16'
+                || substr((string)$row['僑生編號'], 1, 2) == '17'
+                || substr((string)$row['僑生編號'], 1, 2) == '18'
+                || substr((string)$row['僑生編號'], 1, 2) == '19') {
+
+                $keys .= ',lastSchoolCountry';
+                $values .= ',"106"';
+            }
 
             // array_push($query_applicant, 'insert into applicant('.$keys.') values('.$values.');');
             $query .= 'insert into applicant('.$keys.') values('.$values.');'.PHP_EOL;
