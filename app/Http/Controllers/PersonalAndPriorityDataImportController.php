@@ -141,6 +141,15 @@ class PersonalAndPriorityDataImportController extends Controller
                 $col_name = array_get($index, $key, '-1');
                 if ($col_name != '-1') {
                     switch ($col_name) {
+
+                        case 'groupcode':
+                            if ($value !== '1' || $value !== '2' || $value !== '3') {
+                                $col_value = substr((string)$row['僑生編號'], 0, 1);
+                            } else {
+                                $col_value = $value;
+                            }
+                            break;
+
                         case 'sex':
                             if ($value == '男') {
                                 $col_value = 'M';
@@ -227,6 +236,11 @@ class PersonalAndPriorityDataImportController extends Controller
                 }
             }
 
+            if (!array_has($row, '類組')) {
+                $keys.= ',groupcode';
+                $values .= ',"'.substr((string)$row['僑生編號'], 0, 1).'"';
+            }
+
             $keys .= ',account';
             $values .= ',"'.$row['僑生編號'].$row['報名序號'].'"';
 
@@ -286,7 +300,11 @@ class PersonalAndPriorityDataImportController extends Controller
         $error_id_not_found = '';
 
         foreach ($priority_obj as $row1) {
-            $id = $row1["准考證號"];
+            if (array_has($row1, '准考證號')) {
+                $id = $row1['准考證號'];
+            } else if (array_has($row1, '僑生編號')) {
+                $id = $row1['僑生編號'];
+            }
             if ( array_has($id_to_idcode, (string)$id) ) {
                 $idcode = array_get($id_to_idcode, (string)$id);
                 for ($j = 0; $j < $priorities; $j++) {
