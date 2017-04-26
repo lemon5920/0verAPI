@@ -16,8 +16,8 @@ class CreateDepartmentApplicationDocumentsTable extends Migration
         Schema::create('department_application_documents', function (Blueprint $table) {
             $table->string('dept_id');
             $table->unsignedInteger('document_type_id');
-            $table->string('description');
-            $table->string('engDescription');
+            $table->string('detail');
+            $table->string('engDetail');
             $table->string('created_at');
             $table->string('updated_at');
             $table->string('deleted_at')->nullable();
