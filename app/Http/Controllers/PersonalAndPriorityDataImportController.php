@@ -13,8 +13,10 @@ class PersonalAndPriorityDataImportController extends Controller
 {
     public function import(Request $request) {
         $validator = Validator::make($request->all(), [
-            'personal_file' => 'required|mimes:csv,txt',
-            'priority_file' => 'required|mimes:csv,txt'
+            'personal_file' => 'required|file|mimes:csv,txt',
+            'priority_file' => 'required|file|mimes:csv,txt',
+            'applyyear' => 'required|integer',
+            'identification' => 'required|string'
         ]);
 
         if ($validator->fails()) {
@@ -24,6 +26,7 @@ class PersonalAndPriorityDataImportController extends Controller
 
         // 處理個人資料
         $personal_enctype = mb_detect_encoding(file_get_contents($request->personal_file), 'UTF-8, BIG-5', true);
+
         $personal_obj = Excel::load($request->personal_file, function($reader) {
             // Getting all results
         }, $personal_enctype)->get();
@@ -257,9 +260,8 @@ class PersonalAndPriorityDataImportController extends Controller
             $keys .= ',rtime';
             $values .= ',"'.date('Y-m-d H:i:s').'"';
 
-            // FIXME: 應由使用者透過 API/UI 輸入
             $keys .= ',applyyear';
-            $values .= ',"2017"';
+            $values .= ',"' . $request->applyyear . '"';
 
             $keys .= ',updateCheck';
             $values .= ',"N"';
@@ -267,9 +269,8 @@ class PersonalAndPriorityDataImportController extends Controller
             $keys .= ',getORnot';
             $values .= ',"A"';
 
-            // FIXME: 應由使用者透過 API/UI 輸入
             $keys .= ',identification';
-            $values .= ',"海外僑生"';
+            $values .= ',"' . $request->identification . '"';
 
             // 緬甸同學電子檔案沒有最後畢業中學國別，
             // 不過緬甸同學僅能使用當地文憑，
