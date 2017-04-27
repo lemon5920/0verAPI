@@ -7,15 +7,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 use Carbon\Carbon;
 
-class Locales extends Model
+class SchoolUserRole extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'locales';
+    protected $table = 'school_user_role';
 
     protected $dateFormat = Carbon::ISO8601;
 
-    protected $fillable = ['lang_code', 'title'];
+    protected $fillable = ['username', 'role'];
 
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at']; 
 }

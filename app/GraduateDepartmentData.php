@@ -7,18 +7,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 use Carbon\Carbon;
 
-class DepartmentData extends Model
+class GraduateDepartmentData extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'department_data';
+    protected $table = 'graduate_department_data';
 
     protected $dateFormat = Carbon::ISO8601;
 
     protected $fillable = [
         'id', //系所代碼（系統按規則產生）
         'school_code', //學校代碼
-        'card_code', //讀卡代碼
         'title', //系所名稱
         'eng_title', //系所英文名稱
         'choice_memo', //選系說明
@@ -29,13 +28,10 @@ class DepartmentData extends Model
         'eng_dept_memo', //英文備註
         'url', //系網站網址
         'eng_url', //英文系網站網址
-        'last_year_offer', //去年聯合分發錄取名額
-        'decrease_reason', //減招原因
-        'last_year_amount', //去年聯合分發名額（只有學士班有聯合分發）
-        'amount', //聯合分發名額（只有學士班有聯合分發）
-        'personal_apply_amount', //個人申請名額
-        'last_year_personal_apply_amount', //去年個人申請名額
         'last_year_personal_apply_offer', //去年個人申請錄取名額
+        'last_year_personal_apply_amount', //去年個人申請名額
+        'personal_apply_amount', //個人申請名額
+        'decrease_reason', //減招原因
         'self_recurit', //是否有自招
         'self_recurit_amount', //自招名額
         'special_class', //是否招收僑生專班
@@ -44,7 +40,7 @@ class DepartmentData extends Model
         'sex_limit', //性別限制
         'ratify', //核定名額
         'rank', //志願排名
-        'sortorder', //輸出排序
+        'sort_order', //輸出排序
         'after_birth', //限…之後出生
         'before_birth', //限…之前出生
         'dept_group', //18大學群代碼
