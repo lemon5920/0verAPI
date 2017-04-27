@@ -19,4 +19,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('personal-and-priority-data-importer', 'PersonalAndPriorityDataImportController@import');
 
-Route::get('db-schema-to-md', 'DBSchemaToMD@export');
+Route::get('db-schema-to-md', 'DBSchemaToMDController@export');
