@@ -298,6 +298,7 @@ class PersonalAndPriorityDataImportController extends Controller
         $error_less_than_four = '';
         $error_dept_not_found = '';
         $error_id_not_found = '';
+        $error_group_not_match = '';
 
         foreach ($priority_obj as $row1) {
             if (array_has($row1, '准考證號')) {
@@ -313,14 +314,15 @@ class PersonalAndPriorityDataImportController extends Controller
                     if (!empty($oldcode)) {
                         if (strlen($oldcode) < 4) {
                             $error_less_than_four .=
-                            '#vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv'.PHP_EOL
-                            .'#'.$id.'亂畫卡RRRRRRR QAQ （讀卡機無法判讀）, 志願序: '.($j + 1).'讀卡結果: '.$oldcode.PHP_EOL
-                            .'#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'.PHP_EOL;
+                                '#'.$id.'亂畫卡RRRRRRR QAQ （讀卡機無法判讀）, 志願序: '.($j + 1).' 讀卡結果: '.$oldcode.PHP_EOL;
                         } else if (!DB::table('depart')->where('oldcode', $oldcode)->exists()) {
                             $error_dept_not_found .=
-                            '#vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv'.PHP_EOL
-                            .'#'.$id.'不想唸RRRRRRR QAQ （畫的志願不存在）, 志願序: '.($j + 1).'讀卡結果: '.$oldcode.PHP_EOL
-                            .'#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'.PHP_EOL;
+                                '#'.$id.'不想唸RRRRRRR QAQ （畫的志願不存在）, 志願序: '.($j + 1).' 讀卡結果: '.$oldcode.PHP_EOL;
+                        } else if ((substr($id, 0, 1) == '1' && substr($oldcode, 0, 1) % 3 != '1') // 一類跨二三類
+                            || (substr($id, 0, 1) == '2' && substr($oldcode, 0, 1) % 3 == '1') // 二類跨一類
+                            || (substr($id, 0, 1) == '3' && substr($oldcode, 0, 1) % 3 == '1')) { // 三類跨一類
+                            $error_group_not_match .=
+                                '#'.$id.'劈腿啦RRRRRRR QAQ （跨文理組）, 志願序: '.($j + 1).' 讀卡結果: '.$oldcode.' 類組: '.substr($id, 0, 1).PHP_EOL;
                         } else {
                             $query .= 'insert into selection(idcode,oldcode,ser) values("'.$idcode.'","'.$oldcode.'","'.str_pad($j + 1, 2, '0', STR_PAD_LEFT).'");'.PHP_EOL;
                         }
@@ -328,12 +330,12 @@ class PersonalAndPriorityDataImportController extends Controller
                 }
             } else {
                 $error_id_not_found .=
-                    '#vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv'.PHP_EOL
-                    .'#'.$id.'找不到RRRRRRR QAQ （讀卡機無法判讀）, 僑生編號: '.$id.PHP_EOL
-                    .'#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'.PHP_EOL;
+                    '#'.$id.'找不到RRRRRRR QAQ （讀卡機無法判讀）, 僑生編號: '.$id.PHP_EOL;
             }
         }
 
-        return $error_less_than_four.$error_dept_not_found.$error_id_not_found.$query;
+        return $error_less_than_four.PHP_EOL.$error_dept_not_found
+            .PHP_EOL.$error_id_not_found.PHP_EOL.$error_group_not_match
+            .PHP_EOL.$query;
     }
 }
