@@ -26,7 +26,7 @@ class SetupGraduateDepartmentDataTable extends Migration
     public function down()
     {
         Schema::table('graduate_department_data', function (Blueprint $table) {
-            $table->dropForeign('department_data_school_code_foreign');
+            $table->dropForeign('graduate_department_data_school_code_foreign');
         });
     }
 }

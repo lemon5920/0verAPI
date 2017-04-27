@@ -16,7 +16,6 @@ class CreateGraduateDepartmentDataTable extends Migration
         Schema::create('graduate_department_data', function (Blueprint $table) {
             $table->string('id')->unique()->comment('系所代碼（系統按規則產生）');
             $table->string('school_code')->comment('學校代碼');
-            $table->string('card_code')->unique()->comment('讀卡代碼');
             $table->string('title')->comment('系所名稱');
             $table->string('eng_title')->comment('系所英文名稱');
             $table->string('choice_memo')->comment('選系說明');
