@@ -28,9 +28,11 @@ class CreateDepartmentDataTable extends Migration
             $table->string('url')->comment('系網站網址');
             $table->string('eng_url')->comment('英文系網站網址');
             $table->integer('last_year_offer')->comment('去年聯合分發錄取名額');
-            $table->string('decrease_reason')->comment('減招原因');
             $table->integer('last_year_amount')->comment('去年聯合分發名額（只有學士班有聯合分發）');
             $table->integer('amount')->comment('聯合分發名額（只有學士班有聯合分發）');
+            $table->string('decrease_reason')->comment('減招原因');
+            $table->integer('last_year_personal_apply_offer')->comment('去年個人申請錄取名額');
+            $table->integer('last_year_personal_apply_amount')->comment('去年個人申請名額');
             $table->integer('personal_apply_amount')->comment('個人申請名額');
             $table->boolean('self_recurit')->comment('是否有自招');
             $table->integer('self_recurit_amount')->comment('自招名額');
