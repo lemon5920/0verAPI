@@ -17,7 +17,7 @@ class CreateDepartmentApplicationDocumentsTable extends Migration
             $table->string('dept_id');
             $table->unsignedInteger('document_type_id');
             $table->string('detail');
-            $table->string('engDetail');
+            $table->string('eng_detail');
             $table->string('created_at');
             $table->string('updated_at');
             $table->string('deleted_at')->nullable();

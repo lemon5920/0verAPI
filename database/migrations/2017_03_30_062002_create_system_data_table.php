@@ -20,8 +20,8 @@ class CreateSystemDataTable extends Migration
             $table->integer('surplus')->comment('上學年本地生未招足名額（二技參照學士）');
             $table->integer('expanded')->comment('本學年教育部核定擴增名額（二技參照學士）');
             $table->integer('distribution')->comment('聯合分發名額（聯招；研究所沒有）');
-            $table->integer('personalApply')->comment('個人申請名額（聯招）');
-            $table->integer('recruitBySchool')->comment('自招名額');
+            $table->integer('personal_apply')->comment('個人申請名額（聯招）');
+            $table->integer('recruit_by_school')->comment('自招名額');
             $table->string('created_at');
             $table->string('updated_at');
             $table->string('deleted_at')->nullable();

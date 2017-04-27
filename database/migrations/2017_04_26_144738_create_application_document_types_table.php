@@ -16,7 +16,7 @@ class CreateApplicationDocumentTypesTable extends Migration
         Schema::create('application_document_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
-            $table->string('engName')->unique();
+            $table->string('eng_name')->unique();
             $table->string('created_at');
             $table->string('updated_at');
             $table->string('deleted_at')->nullable();
