@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 use Carbon\Carbon;
 
-class Locales extends Model
+class Locale extends Model
 {
     use SoftDeletes;
 
