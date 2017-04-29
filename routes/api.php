@@ -17,8 +17,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('personal-and-priority-data-importer', 'PersonalAndPriorityDataImportController@import');
+Route::post('/personal-and-priority-data-importer', 'PersonalAndPriorityDataImportController@import');
 
-Route::get('db-schema-to-md', 'DBSchemaToMDController@export');
+Route::get('/db-schema-to-md', 'DBSchemaToMDController@export');
 
-Route::resource('schools', 'SchoolDataController');
+Route::resource('/schools', 'SchoolDataController');
