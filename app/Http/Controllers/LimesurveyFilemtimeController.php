@@ -35,9 +35,11 @@ class LimesurveyFilemtimeController extends Controller
 
         foreach ($table as $row) {
             if (json_decode($row->$file)[0]) {
-                $result = array_add($result, $row->firstname, filemtime($path.json_decode($row->$file)[0]->filename));
+                $result = array_add($result, filemtime($path.json_decode($row->$file)[0]->filename), $row->firstname);
                 // Log::info($row->firstname.': '.json_decode($row->$file)[0]->filename);
             }
         }
+
+        return response()->json($result);
     }
 }
