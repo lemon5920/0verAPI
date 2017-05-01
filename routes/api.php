@@ -21,4 +21,6 @@ Route::post('/personal-and-priority-data-importer', 'PersonalAndPriorityDataImpo
 
 Route::get('/db-schema-to-md', 'DBSchemaToMDController@export');
 
+Route::get('/limesurvey-filemtime', 'LimesurveyFilemtimeController@export');
+
 Route::resource('/schools', 'SchoolDataController');
