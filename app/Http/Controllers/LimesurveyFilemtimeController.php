@@ -24,7 +24,7 @@ class LimesurveyFilemtimeController extends Controller
         $id = $request->lid;
         $file_column = $request->file_column;
         $file = $id.'X'.$file_column;
-        $path = '/home/hjwu/LimeSurvey/upload/surveys/'.$id.'files/';
+        $path = '/home/hjwu/LimeSurvey/upload/surveys/'.$id.'/files/';
         $result = [];
 
         $table = DB::Connection('limesurvey')->select(
