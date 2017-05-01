@@ -181,6 +181,7 @@ return [
          * developer install
          */
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Barryvdh\Cors\ServiceProvider::class,
 
     ],
 
