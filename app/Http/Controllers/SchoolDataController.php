@@ -104,7 +104,7 @@ class SchoolDataController extends Controller
 
         $SchoolData = SchoolData::create($InsertData);
 
-        return response()->json($SchoolData);
+        return response()->json($SchoolData, 201);
     }
 
     /**
