@@ -35,11 +35,11 @@ class CreateSchoolDataTable extends Migration
             $table->string('scholarship_dept')->nullable()->comment('獎學金負責單位名稱');
             $table->string('eng_scholarship_dept')->nullable()->comment('獎學金負責單位英文名稱');
             $table->boolean('five_year_allowed')->comment('[中五]我可以招呢');
-            $table->boolean('five_year_prepare')->comment('[中五]我準備招了喔');
+            $table->boolean('five_year_prepare')->nullable()->comment('[中五]我準備招了喔');
             $table->string('five_year_confirmed_by')->nullable()->comment('[中五](school code)');
             $table->string('five_year_rule')->nullable()->comment('[中五]給海聯看的學則');
-            $table->string('approve_no')->comment('自招核定文號');
-            $table->integer('self_limit')->comment('自招總額');
+            $table->string('approve_no')->nullable()->comment('自招核定文號');
+            $table->unsignedInteger('self_limit')->nullable()->comment('自招總額');
             $table->string('created_at');
             $table->string('updated_at');
             $table->string('deleted_at')->nullable();
