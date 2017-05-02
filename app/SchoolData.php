@@ -11,6 +11,8 @@ class SchoolData extends Model
 {
     use SoftDeletes;
 
+    public $incrementing = false;
+
     protected $table = 'school_data';
 
     protected $dateFormat = Carbon::ISO8601;
