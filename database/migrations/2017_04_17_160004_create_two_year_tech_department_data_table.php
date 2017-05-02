@@ -18,12 +18,12 @@ class CreateTwoYearTechDepartmentDataTable extends Migration
             $table->string('school_code')->comment('學校代碼');
             $table->string('title')->comment('系所名稱');
             $table->string('eng_title')->comment('系所英文名稱');
-            $table->string('choice_memo')->comment('選系說明');
-            $table->string('eng_choice_memo')->comment('選系英文說明');
-            $table->string('doc_memo')->comment('書審說明');
-            $table->string('eng_doc_memo')->comment('書審英文說明');
-            $table->string('dept_memo')->comment('備註');
-            $table->string('eng_dept_memo')->comment('英文備註');
+            $table->text('choice_memo')->comment('選系說明');
+            $table->text('eng_choice_memo')->comment('選系英文說明');
+            $table->text('doc_memo')->comment('書審說明');
+            $table->text('eng_doc_memo')->comment('書審英文說明');
+            $table->text('dept_memo')->comment('備註');
+            $table->text('eng_dept_memo')->comment('英文備註');
             $table->string('url')->comment('系網站網址');
             $table->string('eng_url')->comment('英文系網站網址');
             $table->integer('last_year_personal_apply_offer')->comment('去年個人申請錄取名額');

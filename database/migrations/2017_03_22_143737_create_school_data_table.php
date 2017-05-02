@@ -21,8 +21,8 @@ class CreateSchoolDataTable extends Migration
             $table->string('eng_address')->comment('學校英文地址');
             $table->string('organization')->comment('學校負責僑生事務的承辦單位名稱');
             $table->string('eng_organization')->comment('學校負責僑生事務的承辦單位英文名稱');
-            $table->string('dorm_info')->comment('宿舍說明');
-            $table->string('eng_dorm_info')->comment('宿舍英文說明');
+            $table->text('dorm_info')->comment('宿舍說明');
+            $table->text('eng_dorm_info')->comment('宿舍英文說明');
             $table->string('url')->comment('學校網站網址');
             $table->string('eng_url')->comment('學校英文網站網址');
             $table->string('type')->comment('「公、私立」與「大學、科大」之組合＋「僑先部」共五種');
@@ -36,7 +36,7 @@ class CreateSchoolDataTable extends Migration
             $table->string('eng_scholarship_dept')->comment('獎學金負責單位英文名稱');
             $table->boolean('five_year_allowed')->comment('[中五]我可以招呢');
             $table->boolean('five_year_prepare')->comment('[中五]我準備招了喔');
-            $table->integer('five_year_confirmed_by')->comment('[中五](school code)');
+            $table->string('five_year_confirmed_by')->comment('[中五](school code)');
             $table->string('five_year_rule')->comment('[中五]給海聯看的學則');
             $table->string('approve_no')->comment('自招核定文號');
             $table->integer('self_limit')->comment('自招總額');
