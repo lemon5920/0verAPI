@@ -127,6 +127,12 @@ class SchoolDataController extends Controller
      */
     public function show(Request $request, $school_id)
     {
-        return $school_id;
+        if (SchoolData::where('id', '=', $school_id)->exists()) {
+            return SchoolData::where('id', '=', $school_id)->with('departments')->first();
+        }
+
+        $messages = array('School Data Not Found!');
+
+        return response()->json(compact('messages'), 404);
     }
 }

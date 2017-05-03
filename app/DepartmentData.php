@@ -56,4 +56,9 @@ class DepartmentData extends Model
     ];
 
     protected $dates = ['deleted_at'];
+
+    public function user()
+    {
+        return $this->belongsTo('App\SchoolData', 'school_code', 'id');
+    }
 }
