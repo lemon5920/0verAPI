@@ -116,7 +116,13 @@ class SchoolDataController extends Controller
      */
     public function update(Request $request, $school_id)
     {
+        if (SchoolData::where('id', '=', $school_id)->exists()) {
+            // 這裡開始做色色的事情
+        }
 
+        $messages = array('School Data Not Found!');
+
+        return response()->json(compact('messages'), 404);
     }
 
     /**
