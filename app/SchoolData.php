@@ -47,4 +47,9 @@ class SchoolData extends Model
     ];
 
     protected $dates = ['deleted_at'];
+
+    public function departments()
+    {
+        return $this->hasMany('App\DepartmentData', 'school_code', 'id');
+    }
 }
