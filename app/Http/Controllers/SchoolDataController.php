@@ -41,7 +41,7 @@ class SchoolDataController extends Controller
             'eng_scholarship_dept' => 'required_if:scholarship,1|string', //獎學金負責單位英文名稱
             'five_year_allowed' => 'required|boolean', //[中五]我可以招呢
             'five_year_prepare' => 'required|boolean', //[中五]我準備招了喔
-            'five_year_confirmed_by' => 'required_if:five_year_allowed,1|string', //[中五](school code)
+            'five_year_confirmed_by' => 'required_if:five_year_allowed,1|string|exists:school_users,username', //[中五](school_users.username)
             'five_year_rule' => 'required_if:five_year_allowed,1|string', //[中五]給海聯看的學則
             'approve_no' => 'sometimes|required|string', //自招核定文號
             'self_limit' => 'sometimes|required|integer|min:0', //自招總額
