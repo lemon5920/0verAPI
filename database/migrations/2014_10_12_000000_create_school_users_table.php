@@ -16,7 +16,7 @@ class CreateSchoolUsersTable extends Migration
         Schema::create('school_users', function (Blueprint $table) {
             $table->string('username')->primary();
             $table->string('password');
-            $table->string('email')->unique();
+            $table->string('email')->unique()->nullable();
             $table->string('chinese_name');
             $table->string('english_name');
             $table->string('school_code')->comment('該使用者所屬學校代碼');

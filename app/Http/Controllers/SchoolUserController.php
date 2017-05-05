@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Hash;
 use Validator;
 use Carbon\Carbon;
+use App\SchoolUser;
 
 class SchoolUserController extends Controller
 {
@@ -28,7 +30,34 @@ class SchoolUserController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'username' => 'required|string|max:191|unique:school_users,username',
+            'password' => 'required|string|min:6',
+            'email' => 'sometimes|nullable|email|unique:school_users,email',
+            'chinese_name' => 'required|string',
+            'english_name' => 'required|string',
+            'school_code' => 'required|exists:school_data,id',
+            'organization' => 'required|string',
+            'phone' => 'required',
+        ]);
 
+        if($validator->fails()) {
+            $messages = $validator->errors()->all();
+            return response()->json(compact('messages'), 400);
+        }
+
+        $newUser = SchoolUser::create([
+            'username' => $request->username,
+            'password' => Hash::make($request->password),
+            'email' => $request->email,
+            'chinese_name' => $request->chinese_name,
+            'english_name' => $request->english_name,
+            'school_code' => $request->school_code,
+            'organization' => $request->organization,
+            'phone' => $request->phone,
+        ]);
+
+        return $newUser;
     }
 
     /**
