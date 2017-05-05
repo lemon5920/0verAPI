@@ -9,6 +9,8 @@ class SchoolUser extends Authenticatable
 {
     use Notifiable;
 
+    public $incrementing = false;
+
     protected $dateFormat = Carbon::ISO8601;
 
     /**
@@ -17,7 +19,7 @@ class SchoolUser extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'chinese_name', 'english_name', 'school_code', 'organization', 'phone', 'last_login'
+        'username', 'email', 'password', 'chinese_name', 'english_name', 'school_code', 'organization', 'phone', 'last_login'
     ];
 
     /**
