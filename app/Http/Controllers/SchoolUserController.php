@@ -18,7 +18,7 @@ class SchoolUserController extends Controller
      */
     public function index(Request $request)
     {
-        return SchoolUser::with('school')->get();
+        return response()->json(SchoolUser::with('school')->get());
     }
 
     /**
