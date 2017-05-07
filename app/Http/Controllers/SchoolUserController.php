@@ -19,7 +19,7 @@ class SchoolUserController extends Controller
      */
     public function index(Request $request)
     {
-
+        return SchoolUser::all();
     }
 
     /**
@@ -57,19 +57,25 @@ class SchoolUserController extends Controller
             'phone' => $request->phone,
         ]);
 
-        return $newUser;
+        return response()->json($newUser, 201);
     }
 
     /**
      * Display the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  string  $id
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request, $id)
     {
+        if (SchoolUser::where('username', '=', $id)->exists()) {
+            return SchoolUser::where('username', '=', $id)->with('school')->first();
+        }
 
+        $messages = array('User Data Not Found!');
+
+        return response()->json(compact('messages'), 404);
     }
 
     /**
@@ -81,7 +87,14 @@ class SchoolUserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (SchoolUser::where('username', '=', $id)->exists()) {
+            // 這裡開始做色色的事情
+            return SchoolUser::where('username', '=', $id)->with('school')->first();
+        }
 
+        $messages = array('User Data Not Found!');
+
+        return response()->json(compact('messages'), 404);
     }
 
     /**
@@ -92,6 +105,12 @@ class SchoolUserController extends Controller
      */
     public function destroy($id)
     {
+        if (SchoolUser::where('username', '=', $id)->exists()) {
+            // 這裡開始做色色的事情
+        }
 
+        $messages = array('User Data Not Found!');
+
+        return response()->json(compact('messages'), 404);
     }
 }
