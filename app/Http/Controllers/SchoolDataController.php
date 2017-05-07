@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Validator;
-use Carbon\Carbon;
 use App\SchoolData;
 
 class SchoolDataController extends Controller

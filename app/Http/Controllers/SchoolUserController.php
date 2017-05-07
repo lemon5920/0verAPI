@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 
 use Hash;
 use Validator;
-use Carbon\Carbon;
 use App\SchoolUser;
 
 class SchoolUserController extends Controller
@@ -19,7 +18,7 @@ class SchoolUserController extends Controller
      */
     public function index(Request $request)
     {
-        return SchoolUser::all();
+        return SchoolUser::with('school')->get();
     }
 
     /**
@@ -89,7 +88,6 @@ class SchoolUserController extends Controller
     {
         if (SchoolUser::where('username', '=', $id)->exists()) {
             // 這裡開始做色色的事情
-            return SchoolUser::where('username', '=', $id)->with('school')->first();
         }
 
         $messages = array('User Data Not Found!');
@@ -100,7 +98,7 @@ class SchoolUserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  string  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
