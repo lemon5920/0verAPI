@@ -15,7 +15,7 @@ return [
 
     'defaults' => [
         'guard' => 'web',
-        'passwords' => 'school-users',
+        'passwords' => 'users',
     ],
 
     /*
@@ -38,13 +38,18 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'school-users',
+            'provider' => 'users',
         ],
 
         'api' => [
             'driver' => 'token',
-            'provider' => 'school-users',
+            'provider' => 'users',
         ],
+
+        'schooluser' => [
+            'driver' => 'session',
+            'provider' => 'schoolusers',
+        ]
     ],
 
     /*
@@ -65,15 +70,20 @@ return [
     */
 
     'providers' => [
-        'school-users' => [
+        'users' => [
             'driver' => 'eloquent',
-            'model' => App\SchoolUser::class,
+            'model' => App\User::class,
         ],
 
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
+
+        'schoolusers' => [
+            'driver' => 'eloquent',
+            'model' => App\SchoolUser::class,
+        ]
     ],
 
     /*
@@ -97,6 +107,12 @@ return [
             'table' => 'password_resets',
             'expire' => 60,
         ],
+
+        'schoolusers' => [
+            'provider' => 'schoolusers',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ]
     ],
 
 ];

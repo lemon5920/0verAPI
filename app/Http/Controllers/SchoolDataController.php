@@ -9,6 +9,11 @@ use App\SchoolData;
 
 class SchoolDataController extends Controller
 {
+    public function index(Request $request)
+    {
+        return $request->session()->get('username');
+    }
+
     /**
      * 新增學校
      *
