@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 use Hash;
 use Validator;
@@ -87,7 +88,32 @@ class SchoolUserController extends Controller
     public function update(Request $request, $id)
     {
         if (SchoolUser::where('username', '=', $id)->exists()) {
-            // 這裡開始做色色的事情
+            $validator = Validator::make($request->all(), [
+                'password' => 'required|string|min:6',
+                'email' => ['sometimes', 'nullable', 'email', Rule::unique('school_users', 'email')->ignore($id, 'username')],
+                'chinese_name' => 'required|string',
+                'english_name' => 'required|string',
+                'school_code' => 'required|exists:school_data,id',
+                'organization' => 'required|string',
+                'phone' => 'required',
+            ]);
+
+            if($validator->fails()) {
+                $messages = $validator->errors()->all();
+                return response()->json(compact('messages'), 400);
+            }
+
+            SchoolUser::where('username', '=', $id)->update([
+                'password' => Hash::make($request->password),
+                'email' => $request->email,
+                'chinese_name' => $request->chinese_name,
+                'english_name' => $request->english_name,
+                'school_code' => $request->school_code,
+                'organization' => $request->organization,
+                'phone' => $request->phone,
+            ]);
+
+            return SchoolUser::where('username', '=', $id)->first();
         }
 
         $messages = array('User Data Not Found!');
