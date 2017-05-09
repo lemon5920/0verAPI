@@ -11,6 +11,8 @@ class SchoolUser extends Authenticatable
 {
     use Notifiable;
 
+    protected $table = 'school_users';
+
     public $incrementing = false;
 
     protected $dateFormat = Carbon::ISO8601;
