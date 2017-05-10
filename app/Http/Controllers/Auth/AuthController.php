@@ -10,11 +10,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 
 use Illuminate\Http\Request;
 
+use Session;
+use Auth;
 use Validator;
 use App\SchoolUser;
 
@@ -46,10 +46,16 @@ class AuthController extends Controller
             return response()->json(['messages' => ['invalid credentials']], 401);
         }
 
-        $user = Auth::guard('schooluser')->user();
-
-        Session::put('username', $user->username);
-
         return response()->json(SchoolUser::where('username', '=', $credentials['username'])->with('school')->first());
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | school user logout
+    |--------------------------------------------------------------------------
+    */
+    public function SchoolUserLogout()
+    {
+        Session::flush();
     }
 }

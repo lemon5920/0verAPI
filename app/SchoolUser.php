@@ -14,6 +14,8 @@ class SchoolUser extends Authenticatable
 
     protected $table = 'school_users';
 
+    protected $primaryKey = 'username';
+
     public $incrementing = false;
 
     protected $dateFormat = Carbon::ISO8601;

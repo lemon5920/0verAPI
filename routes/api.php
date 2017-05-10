@@ -18,7 +18,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
  */
-Route::get('/schooluser-login', 'Auth\AuthController@SchoolUserLogin');
+
+Route::post('/schools/login', 'Auth\AuthController@SchoolUserLogin');
+
+Route::post('/schools/logout', 'Auth\AuthController@SchoolUserLogout');
 
 Route::resource('/schools', 'SchoolDataController');
 

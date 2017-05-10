@@ -4,15 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use phpDocumentor\Reflection\Types\Null_;
+use Auth;
 use Validator;
 use App\SchoolData;
 
 class SchoolDataController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        return $request->session()->get('username');
+        return Auth::guard('schooluser')->user();
     }
 
     /**
