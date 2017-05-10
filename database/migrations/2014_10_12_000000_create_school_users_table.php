@@ -26,6 +26,7 @@ class CreateSchoolUsersTable extends Migration
             $table->string('created_at');
             $table->string('updated_at');
             $table->string('deleted_at')->nullable();
+            $table->rememberToken();
         });
     }
 

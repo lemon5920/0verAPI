@@ -56,6 +56,7 @@ class AuthController extends Controller
     */
     public function SchoolUserLogout()
     {
-        Session::flush();
+        //Session::flush();
+        Auth::guard('schooluser')->logout();
     }
 }
