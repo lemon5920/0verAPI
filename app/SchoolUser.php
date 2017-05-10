@@ -4,12 +4,13 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 use Carbon\Carbon;
 
 class SchoolUser extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, SoftDeletes;
 
     protected $table = 'school_users';
 

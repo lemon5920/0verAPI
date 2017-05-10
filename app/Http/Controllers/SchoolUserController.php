@@ -82,7 +82,7 @@ class SchoolUserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  string  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -130,7 +130,9 @@ class SchoolUserController extends Controller
     public function destroy($id)
     {
         if (SchoolUser::where('username', '=', $id)->exists()) {
-            // 這裡開始做色色的事情
+            SchoolUser::where('username', '=', $id)->delete();
+
+            return SchoolUser::withTrashed()->where('username', '=', $id)->first();
         }
 
         $messages = array('User Data Not Found!');
