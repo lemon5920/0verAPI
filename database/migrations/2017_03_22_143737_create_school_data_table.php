@@ -46,7 +46,7 @@ class CreateSchoolDataTable extends Migration
         });
 
         Schema::table('school_data', function (Blueprint $table) {
-            $table->foreign('five_year_confirmed_by')->references('username')->on('admin');
+            $table->foreign('five_year_confirmed_by')->references('username')->on('admins');
         });
     }
 

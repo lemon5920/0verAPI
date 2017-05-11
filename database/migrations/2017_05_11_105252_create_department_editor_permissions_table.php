@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDepartmentEditorPermissionTable extends Migration
+class CreateDepartmentEditorPermissionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateDepartmentEditorPermissionTable extends Migration
      */
     public function up()
     {
-        Schema::create('department_editor_permission', function (Blueprint $table) {
+        Schema::create('department_editor_permissions', function (Blueprint $table) {
             $table->string('username');
             $table->string('dept_id');
             $table->string('created_at');
@@ -22,8 +22,8 @@ class CreateDepartmentEditorPermissionTable extends Migration
             $table->primary(['username', 'dept_id'], 'pkey');
         });
 
-        Schema::table('department_editor_permission', function (Blueprint $table) {
-            $table->foreign('username')->references('username')->on('school_editor');
+        Schema::table('department_editor_permissions', function (Blueprint $table) {
+            $table->foreign('username')->references('username')->on('school_editors');
             $table->foreign('dept_id')->references('id')->on('department_data');
         });
     }
@@ -35,11 +35,11 @@ class CreateDepartmentEditorPermissionTable extends Migration
      */
     public function down()
     {
-        Schema::table('department_editor_permission', function (Blueprint $table) {
-            $table->dropForeign('department_editor_permission_username_foreign');
-            $table->dropForeign('department_editor_permission_dept_id_foreign');
+        Schema::table('department_editor_permissions', function (Blueprint $table) {
+            $table->dropForeign('department_editor_permissions_username_foreign');
+            $table->dropForeign('department_editor_permissions_dept_id_foreign');
         });
 
-        Schema::dropIfExists('department_editor_permission');
+        Schema::dropIfExists('department_editor_permissions');
     }
 }

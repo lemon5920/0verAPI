@@ -13,7 +13,7 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('school_editor', function (Blueprint $table) {
+        Schema::create('school_editors', function (Blueprint $table) {
             $table->string('username')->primary();
             $table->string('password');
             $table->string('email')->unique()->nullable();
@@ -30,7 +30,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
         });
 
-        Schema::create('school_reviewer', function (Blueprint $table) {
+        Schema::create('school_reviewers', function (Blueprint $table) {
             $table->string('username')->primary();
             $table->string('password');
             $table->string('email')->unique()->nullable();
@@ -47,7 +47,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
         });
 
-        Schema::create('admin', function (Blueprint $table) {
+        Schema::create('admins', function (Blueprint $table) {
             $table->string('username')->primary();
             $table->string('password');
             $table->string('email')->unique()->nullable();
@@ -68,10 +68,10 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('admin');
+        Schema::dropIfExists('admins');
 
-        Schema::dropIfExists('school_editor');
+        Schema::dropIfExists('school_editors');
 
-        Schema::dropIfExists('school_reviewer');
+        Schema::dropIfExists('school_reviewers');
     }
 }

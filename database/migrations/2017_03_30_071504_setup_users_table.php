@@ -13,11 +13,11 @@ class SetupUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('school_editor', function (Blueprint $table) {
+        Schema::table('school_editors', function (Blueprint $table) {
             $table->foreign('school_code')->references('id')->on('school_data');
         });
 
-        Schema::table('school_reviewer', function (Blueprint $table) {
+        Schema::table('school_reviewers', function (Blueprint $table) {
             $table->foreign('school_code')->references('id')->on('school_data');
         });
     }
@@ -29,12 +29,12 @@ class SetupUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('school_editor', function (Blueprint $table) {
-            $table->dropForeign('school_editor_school_code_foreign');
+        Schema::table('school_editors', function (Blueprint $table) {
+            $table->dropForeign('school_editors_school_code_foreign');
         });
 
-        Schema::table('school_reviewer', function (Blueprint $table) {
-            $table->dropForeign('school_reviewer_school_code_foreign');
+        Schema::table('school_reviewers', function (Blueprint $table) {
+            $table->dropForeign('school_reviewers_school_code_foreign');
         });
     }
 }
