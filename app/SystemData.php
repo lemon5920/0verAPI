@@ -7,6 +7,33 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 use Carbon\Carbon;
 
+/**
+ * App\SystemData
+ *
+ * @property string $school_code 學校代碼
+ * @property string $system 學制種類（學士, 碩士, 二技, 博士）
+ * @property int $quantity_of_overseas 僑生可招收數量
+ * @property int $surplus 上學年本地生未招足名額（二技參照學士）
+ * @property int $expanded 本學年教育部核定擴增名額（二技參照學士）
+ * @property int $distribution 聯合分發名額（聯招；研究所沒有）
+ * @property int $personal_apply 個人申請名額（聯招）
+ * @property int $recruit_by_school 自招名額
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\SystemData whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\SystemData whereDeletedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\SystemData whereDistribution($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\SystemData whereExpanded($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\SystemData wherePersonalApply($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\SystemData whereQuantityOfOverseas($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\SystemData whereRecruitBySchool($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\SystemData whereSchoolCode($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\SystemData whereSurplus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\SystemData whereSystem($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\SystemData whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class SystemData extends Model
 {
     use SoftDeletes;
