@@ -11,7 +11,7 @@ class AdminPolicy
 
     public function before(Admin $user)
     {
-        if ($user->admin == true) {
+        if ((bool)$user->admin == true) {
             return true;
         }
     }
@@ -25,7 +25,7 @@ class AdminPolicy
      */
     public function view(Admin $user, Admin $admin)
     {
-        return true;
+        return (bool)$user->admin == true;
     }
 
     /**
@@ -36,7 +36,7 @@ class AdminPolicy
      */
     public function create(Admin $user)
     {
-        return $user->admin == true;
+        return (bool)$user->admin == true;
     }
 
     /**
@@ -60,6 +60,6 @@ class AdminPolicy
      */
     public function delete(Admin $user, Admin $admin)
     {
-        return $user->admin == true;
+        return (bool)$user->admin == true;
     }
 }
