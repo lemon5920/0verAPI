@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             $this->call(SchoolDataTableSeeder::class);
             $this->call(SchoolEditorsTableSeeder::class);
             $this->call(SchoolReviewersTableSeeder::class);
+            $this->call(SystemDataTableSeeder::class);
         }
     }
 }
