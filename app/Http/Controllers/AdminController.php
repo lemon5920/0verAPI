@@ -5,12 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use Hash;
+use Auth;
 use Illuminate\Validation\Rule;
 
 use App\Admin;
 
 class AdminController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +25,11 @@ class AdminController extends Controller
      */
     public function index(Request $request)
     {
-        return Admin::all();
+        $user = Auth::user();
+
+        if ($user->can('view', $user)) {
+            return Admin::all();
+        }
     }
 
     /**
