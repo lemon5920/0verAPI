@@ -36,6 +36,7 @@ class CreateTwoYearTechDepartmentDataTable extends Migration
             $table->boolean('special_class')->comment('是否招收僑生專班');
             $table->boolean('special_class_foriegn')->comment('是否招收外生專班');
             $table->boolean('approve_no_of_special_class')->nullable()->comment('僑生專班報部文號');
+            $table->string('approval_document_of_special_class')->comment('僑生專班報部公文電子檔');
             $table->string('special_dept')->nullable()->comment('特殊系所（醫、牙、中醫、藝術）');
             $table->string('sex_limit')->nullable()->comment('性別限制');
             $table->integer('ratify')->comment('核定名額');

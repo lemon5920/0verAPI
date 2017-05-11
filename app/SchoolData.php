@@ -42,7 +42,8 @@ class SchoolData extends Model
         'five_year_prepare', //[中五]我準備招了喔
         'five_year_confirmed_by', //[中五](school code)
         'five_year_rule', //[中五]給海聯看的學則
-        'approve_no', //自招核定文號
+        'approve_no_of_independent_recruitment', //自招核定文號
+        'approval_document_of_independent_recruitment', //自招核定公文電子檔
         'self_limit', //自招總額
     ];
 

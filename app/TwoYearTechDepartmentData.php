@@ -38,6 +38,7 @@ class TwoYearTechDepartmentData extends Model
         'special_class', //是否招收僑生專班
         'special_class_foriegn', //是否招收外生專班
         'approve_no_of_special_class', //僑生專班報部文號
+        'approval_document_of_special_class', //僑生專班報部公文電子檔
         'special_dept', //特殊系所（醫、牙、中醫、藝術）
         'sex_limit', //性別限制
         'ratify', //核定名額

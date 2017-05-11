@@ -38,7 +38,8 @@ class CreateSchoolDataTable extends Migration
             $table->boolean('five_year_prepare')->nullable()->comment('[中五]我準備招了喔');
             $table->string('five_year_confirmed_by')->nullable()->comment('[中五]誰說確定可以招的？(admin.username)');
             $table->string('five_year_rule')->nullable()->comment('[中五]給海聯看的學則');
-            $table->string('approve_no')->nullable()->comment('自招核定文號');
+            $table->string('approve_no_of_independent_recruitment')->nullable()->comment('自招核定文號');
+            $table->string('approval_document_of_independent_recruitment')->comment('自招核定公文電子檔');
             $table->unsignedInteger('self_limit')->nullable()->comment('自招總額');
             $table->string('created_at');
             $table->string('updated_at');
