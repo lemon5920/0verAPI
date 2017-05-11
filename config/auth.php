@@ -46,10 +46,20 @@ return [
             'provider' => 'users',
         ],
 
-        'schooluser' => [
+        'schooleditor' => [
             'driver' => 'session',
-            'provider' => 'schoolusers',
-        ]
+            'provider' => 'schooleditors',
+        ],
+
+        'schoolreviewer' => [
+            'driver' => 'session',
+            'provider' => 'schoolreviewers',
+        ],
+
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
     ],
 
     /*
@@ -80,9 +90,19 @@ return [
         //     'table' => 'users',
         // ],
 
-        'schoolusers' => [
+        'schooleditors' => [
             'driver' => 'eloquent',
-            'model' => App\SchoolUser::class,
+            'model' => App\SchoolEditor::class,
+        ],
+
+        'schoolreviewers' => [
+            'driver' => 'eloquent',
+            'model' => App\SchoolReviewer::class,
+        ],
+
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Admin::class,
         ]
     ],
 
@@ -108,8 +128,20 @@ return [
             'expire' => 60,
         ],
 
-        'schoolusers' => [
-            'provider' => 'schoolusers',
+        'schooleditors' => [
+            'provider' => 'schooleditors',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
+
+        'schoolreviewers' => [
+            'provider' => 'schoolreviewers',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
+
+        'admins' => [
+            'provider' => 'admins',
             'table' => 'password_resets',
             'expire' => 60,
         ]
