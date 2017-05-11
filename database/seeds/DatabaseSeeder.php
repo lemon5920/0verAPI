@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(LocalesTableSeeder::class);
         $this->call(SystemTypesTableSeeder::class);
 
-        if (env(APP_ENV) == 'local') {
+        if (App::environment() == 'local') {
             $this->call(AdminsTableSeeder::class);
             $this->call(SchoolDataTableSeeder::class);
             $this->call(SchoolEditorsTableSeeder::class);
