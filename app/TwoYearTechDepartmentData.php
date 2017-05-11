@@ -85,6 +85,8 @@ use Carbon\Carbon;
  * @method static \Illuminate\Database\Query\Builder|\App\TwoYearTechDepartmentData whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\TwoYearTechDepartmentData whereUrl($value)
  * @mixin \Eloquent
+ * @property string $approval_document_of_special_class 僑生專班報部公文電子檔
+ * @method static \Illuminate\Database\Query\Builder|\App\TwoYearTechDepartmentData whereApprovalDocumentOfSpecialClass($value)
  */
 class TwoYearTechDepartmentData extends Model
 {

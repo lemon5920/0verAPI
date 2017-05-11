@@ -70,6 +70,10 @@ use Carbon\Carbon;
  * @method static \Illuminate\Database\Query\Builder|\App\SchoolData whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\SchoolData whereUrl($value)
  * @mixin \Eloquent
+ * @property string $approve_no_of_independent_recruitment 自招核定文號
+ * @property string $approval_document_of_independent_recruitment 自招核定公文電子檔
+ * @method static \Illuminate\Database\Query\Builder|\App\SchoolData whereApprovalDocumentOfIndependentRecruitment($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\SchoolData whereApproveNoOfIndependentRecruitment($value)
  */
 class SchoolData extends Model
 {
