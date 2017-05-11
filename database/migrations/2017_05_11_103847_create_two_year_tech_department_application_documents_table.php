@@ -25,8 +25,8 @@ class CreateTwoYearTechDepartmentApplicationDocumentsTable extends Migration
         });
 
         Schema::table('two_year_tech_department_application_documents', function (Blueprint $table) {
-            $table->foreign('document_type_id')->references('id')->on('application_document_types');
-            $table->foreign('dept_id')->references('id')->on('two_year_tech_department_data');
+            $table->foreign('document_type_id', 'two_year_tech_type_foreign')->references('id')->on('application_document_types');
+            $table->foreign('dept_id', 'two_year_tech_id_foreign')->references('id')->on('two_year_tech_department_data');
         });
     }
 
@@ -38,8 +38,8 @@ class CreateTwoYearTechDepartmentApplicationDocumentsTable extends Migration
     public function down()
     {
         Schema::table('two_year_tech_department_application_documents', function (Blueprint $table) {
-            $table->dropForeign('two_year_tech_department_application_documents_document_type_id_foreign');
-            $table->dropForeign('two_year_tech_department_application_documents_dept_id_foreign');
+            $table->dropForeign('two_year_tech_type_foreign');
+            $table->dropForeign('two_year_tech_id_foreign');
         });
 
         Schema::dropIfExists('two_year_tech_department_application_documents');

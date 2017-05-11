@@ -25,8 +25,8 @@ class CreateGraduateDepartmentApplicationDocumentsTable extends Migration
         });
 
         Schema::table('graduate_department_application_documents', function (Blueprint $table) {
-            $table->foreign('document_type_id')->references('id')->on('application_document_types');
-            $table->foreign('dept_id')->references('id')->on('graduate_department_data');
+            $table->foreign('document_type_id', 'graduate_type_foreign')->references('id')->on('application_document_types');
+            $table->foreign('dept_id', 'graduate_id_foreign')->references('id')->on('graduate_department_data');
         });
     }
 
@@ -38,8 +38,8 @@ class CreateGraduateDepartmentApplicationDocumentsTable extends Migration
     public function down()
     {
         Schema::table('graduate_department_application_documents', function (Blueprint $table) {
-            $table->dropForeign('graduate_department_application_documents_document_type_id_foreign');
-            $table->dropForeign('graduate_department_application_documents_dept_id_foreign');
+            $table->dropForeign('graduate_type_foreign');
+            $table->dropForeign('graduate_id_foreign');
         });
 
         Schema::dropIfExists('graduate_department_application_documents');
