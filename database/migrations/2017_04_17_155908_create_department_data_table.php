@@ -41,7 +41,7 @@ class CreateDepartmentDataTable extends Migration
             $table->string('special_dept')->nullable()->comment('特殊系所（醫、牙、中醫、藝術）');
             $table->string('sex_limit')->nullable()->comment('性別限制');
             $table->integer('ratify')->comment('核定名額');
-            $table->integer('rank')->default(999)->comment('志願排名');
+            $table->integer('rank')->default(99999)->comment('志願排名');
             $table->integer('sort_order')->comment('輸出排序');
             $table->string('after_birth')->nullable()->comment('限…之後出生');
             $table->string('before_birth')->nullable()->comment('限…之前出生');
