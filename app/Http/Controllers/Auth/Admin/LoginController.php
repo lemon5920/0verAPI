@@ -1,33 +1,53 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: zxp86021
- * Date: 2017/5/9
- * Time: 上午 11:40
- */
 
-namespace App\Http\Controllers\Auth;
-
-use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+namespace App\Http\Controllers\Auth\Admin;
 
 use Illuminate\Http\Request;
-
-use Session;
+use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
-use Validator;
-use App\SchoolUser;
 
-class AuthController extends Controller
+use Validator;
+use App\Admin;
+
+class LoginController extends Controller
 {
     use AuthenticatesUsers;
 
+    protected function guard()
+    {
+        return Auth::guard('admin');
+    }
+
+    public function username()
+    {
+        return 'username';
+    }
+
+    /**
+     * Where to redirect users after login.
+     *
+     * @var string
+     */
+    protected $redirectTo = NULL;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('guest', ['except' => 'logout']);
+    }
+
     /*
     |--------------------------------------------------------------------------
-    | school user login
+    | Login
     |--------------------------------------------------------------------------
     */
-    public function SchoolUserLogin(Request $request)
+    /*
+    public function AdminLogin(Request $request)
     {
         // grab credentials from the request
         $credentials = $request->only('username', 'password');
@@ -42,21 +62,23 @@ class AuthController extends Controller
         }
 
         // attempt to verify the credentials and create a token for the user
-        if (!Auth::guard('schooluser')->attempt(['username' => $credentials['username'], 'password' => $credentials['password'], 'deleted_at' => NULL])) {
+        if (!Auth::attempt(['username' => $credentials['username'], 'password' => $credentials['password'], 'deleted_at' => NULL])) {
             return response()->json(['messages' => ['invalid credentials']], 401);
         }
 
-        return response()->json(SchoolUser::where('username', '=', $credentials['username'])->with('school')->first());
+        return response()->json(Admin::where('username', '=', $credentials['username'])->first());
     }
-
+    */
     /*
     |--------------------------------------------------------------------------
-    | school user logout
+    | Logout
     |--------------------------------------------------------------------------
     */
-    public function SchoolUserLogout()
+    /*
+    public function AdminLogout()
     {
         //Session::flush();
-        Auth::guard('schooluser')->logout();
+        Auth::logout();
     }
+    */
 }
