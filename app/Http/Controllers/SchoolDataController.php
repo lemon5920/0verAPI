@@ -12,7 +12,7 @@ class SchoolDataController extends Controller
 {
     public function index()
     {
-        return Auth::guard('schooluser')->user();
+        return Auth::guard('schooleditor')->user();
     }
 
     /**

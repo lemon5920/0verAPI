@@ -7,7 +7,7 @@ use Illuminate\Validation\Rule;
 
 use Hash;
 use Validator;
-use App\SchoolUser;
+use App\SchoolEditor;
 
 class SchoolUserController extends Controller
 {
@@ -19,7 +19,7 @@ class SchoolUserController extends Controller
      */
     public function index(Request $request)
     {
-        return response()->json(SchoolUser::with('school')->get());
+        return response()->json(SchoolEditor::with('school')->get());
     }
 
     /**
@@ -31,9 +31,9 @@ class SchoolUserController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'username' => 'required|string|max:191|unique:school_users,username',
+            'username' => 'required|string|max:191|unique:school_editors,username',
             'password' => 'required|string|min:6',
-            'email' => 'sometimes|nullable|email|unique:school_users,email',
+            'email' => 'sometimes|nullable|email|unique:school_editors,email',
             'chinese_name' => 'required|string',
             'english_name' => 'required|string',
             'school_code' => 'required|exists:school_data,id',
@@ -46,7 +46,7 @@ class SchoolUserController extends Controller
             return response()->json(compact('messages'), 400);
         }
 
-        $newUser = SchoolUser::create([
+        $newUser = SchoolEditor::create([
             'username' => $request->username,
             'password' => Hash::make($request->password),
             'email' => $request->email,
@@ -69,8 +69,8 @@ class SchoolUserController extends Controller
      */
     public function show(Request $request, $id)
     {
-        if (SchoolUser::where('username', '=', $id)->exists()) {
-            return SchoolUser::where('username', '=', $id)->with('school')->first();
+        if (SchoolEditor::where('username', '=', $id)->exists()) {
+            return SchoolEditor::where('username', '=', $id)->with('school')->first();
         }
 
         $messages = array('User Data Not Found!');
@@ -87,7 +87,7 @@ class SchoolUserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (SchoolUser::where('username', '=', $id)->exists()) {
+        if (SchoolEditor::where('username', '=', $id)->exists()) {
             $validator = Validator::make($request->all(), [
                 'password' => 'required|string|min:6',
                 'email' => ['sometimes', 'nullable', 'email', Rule::unique('school_users', 'email')->ignore($id, 'username')],
@@ -103,7 +103,7 @@ class SchoolUserController extends Controller
                 return response()->json(compact('messages'), 400);
             }
 
-            SchoolUser::where('username', '=', $id)->update([
+            SchoolEditor::where('username', '=', $id)->update([
                 'password' => Hash::make($request->password),
                 'email' => $request->email,
                 'chinese_name' => $request->chinese_name,
@@ -113,7 +113,7 @@ class SchoolUserController extends Controller
                 'phone' => $request->phone,
             ]);
 
-            return SchoolUser::where('username', '=', $id)->first();
+            return SchoolEditor::where('username', '=', $id)->first();
         }
 
         $messages = array('User Data Not Found!');
@@ -129,10 +129,10 @@ class SchoolUserController extends Controller
      */
     public function destroy($id)
     {
-        if (SchoolUser::where('username', '=', $id)->exists()) {
-            SchoolUser::where('username', '=', $id)->delete();
+        if (SchoolEditor::where('username', '=', $id)->exists()) {
+            SchoolEditor::where('username', '=', $id)->delete();
 
-            return SchoolUser::withTrashed()->where('username', '=', $id)->first();
+            return SchoolEditor::withTrashed()->where('username', '=', $id)->first();
         }
 
         $messages = array('User Data Not Found!');
