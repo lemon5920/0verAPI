@@ -14,38 +14,85 @@ class SchoolDataTableSeeder extends Seeder
      */
     public function run()
     {
-        /*
-        DB::table('school_data')->insert(
+        DB::table('school_data')->insert([
             [
-                'username' => 'admin1',
-                'password' => Hash::make('admin123!@#'),
-                'email' => 'a@a.a',
-                'chinese_name' => '管理者一號',
-                'admin' => true,
+                'id' => '01',
+                'type' => '國立大學',
+                'title' => '國立臺灣大學',
+                'eng_title' => 'National  Taiwan University',
+                'address' => '10617臺北市羅斯福路4段1號',
+                'phone' => '886-2-33662388轉203',
+                'fax' => '886-2-23638200',
+                'url' => 'http://www.ntu.edu.tw',
+                'organization' => '註冊組',
+                'sort_order' => '1',
+                'five_year_allowed' => true,
+                'five_year_prepare' => true,
+                'five_year_confirmed_by' => 'admin1',
+                'five_year_rule' => '第17條',
+                'approve_no_of_independent_recruitment' => '臺教高(四)字第1040109682號',
+                'eng_address' => 'No. 1, Sec. 4, Roosevelt Road, Taipei, 10617 Taiwan R.O.C.',
+                'dorm_info' => '新生保障住宿',
+                'scholarship' => '有提供',
+                'scholarship_url' => 'http://gocfs.osa.ntu.edu.tw/news/news.php?class=101',
+                'self_limit' => '0',
+                'scholarship_dept' => '學務處生活輔導組及僑生及陸生輔導組',
                 'created_at' => Carbon::now()->toIso8601String(),
                 'updated_at' => Carbon::now()->toIso8601String()
             ],
 
             [
-                'username' => 'admin2',
-                'password' => Hash::make('admin123!@#'),
-                'email' => 'b@a.a',
-                'chinese_name' => '管理者二號',
-                'admin' => false,
+                'id' => '02',
+                'type' => '國立大學',
+                'title' => '國立成功大學',
+                'eng_title' => 'National  Taiwan University',
+                'address' => '10617臺北市羅斯福路4段1號',
+                'phone' => '886-2-33662388轉203',
+                'fax' => '886-2-23638200',
+                'url' => 'http://www.ntu.edu.tw',
+                'organization' => '註冊組',
+                'sort_order' => '1',
+                'five_year_allowed' => true,
+                'five_year_prepare' => true,
+                'five_year_confirmed_by' => 'admin1',
+                'five_year_rule' => '第17條',
+                'approve_no_of_independent_recruitment' => '臺教高(四)字第1040109682號',
+                'eng_address' => 'No. 1, Sec. 4, Roosevelt Road, Taipei, 10617 Taiwan R.O.C.',
+                'dorm_info' => '新生保障住宿',
+                'scholarship' => '有提供',
+                'scholarship_url' => 'http://gocfs.osa.ntu.edu.tw/news/news.php?class=101',
+                'self_limit' => '0',
+                'scholarship_dept' => '學務處生活輔導組及僑生及陸生輔導組',
                 'created_at' => Carbon::now()->toIso8601String(),
                 'updated_at' => Carbon::now()->toIso8601String()
             ],
 
             [
-                'username' => 'admin3',
-                'password' => Hash::make('admin123!@#'),
-                'email' => 'a@b.a',
-                'chinese_name' => '管理者三號',
-                'admin' => false,
+                'id' => '04',
+                'type' => '國立大學',
+                'title' => '國立暨南國際大學',
+                'eng_title' => 'National  Taiwan University',
+                'address' => '10617臺北市羅斯福路4段1號',
+                'phone' => '886-2-33662388轉203',
+                'fax' => '886-2-23638200',
+                'url' => 'http://www.ntu.edu.tw',
+                'organization' => '註冊組',
+                'sort_order' => '1',
+                'five_year_allowed' => true,
+                'five_year_prepare' => true,
+                'five_year_confirmed_by' => 'admin1',
+                'five_year_rule' => '第17條',
+                'approve_no_of_independent_recruitment' => '臺教高(四)字第1040109682號',
+                'eng_address' => 'No. 1, Sec. 4, Roosevelt Road, Taipei, 10617 Taiwan R.O.C.',
+                'dorm_info' => '新生保障住宿',
+                'scholarship' => '有提供',
+                'scholarship_url' => 'http://gocfs.osa.ntu.edu.tw/news/news.php?class=101',
+                'self_limit' => '0',
+                'scholarship_dept' => '學務處生活輔導組及僑生及陸生輔導組',
                 'created_at' => Carbon::now()->toIso8601String(),
                 'updated_at' => Carbon::now()->toIso8601String()
             ]
-        );
+        ]);
         */
     }
 }

@@ -14,7 +14,7 @@ class AdminsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('admins')->insert(
+        DB::table('admins')->insert([
             [
                 'username' => 'admin1',
                 'password' => Hash::make('admin123!@#'),
@@ -44,6 +44,6 @@ class AdminsTableSeeder extends Seeder
                 'created_at' => Carbon::now()->toIso8601String(),
                 'updated_at' => Carbon::now()->toIso8601String()
             ]
-        );
+        ]);
     }
 }
