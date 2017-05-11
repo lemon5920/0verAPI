@@ -45,6 +45,8 @@ class SystemData extends Model
     protected $fillable = [
         'school_code', //學校代碼
         'system', //學制種類（學士, 碩士, 二技, 博士）
+        'description', //學制描述
+        'eng_description', //'學制描述
         'quantity_of_overseas', //僑生可招收數量
         'surplus', //上學年本地生未招足名額（二技參照學士）
         'expanded', //本學年教育部核定擴增名額（二技參照學士）

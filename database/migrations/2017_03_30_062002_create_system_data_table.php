@@ -16,6 +16,8 @@ class CreateSystemDataTable extends Migration
         Schema::create('system_data', function (Blueprint $table) {
             $table->string('school_code')->comment('學校代碼');
             $table->string('system')->comment('學制種類（學士, 碩士, 二技, 博士）');
+            $table->string('description')->comment('學制描述');
+            $table->string('eng_description')->comment('學制描述');
             $table->unsignedInteger('quantity_of_overseas')->nullable()->comment('僑生可招收數量');
             $table->unsignedInteger('surplus')->nullable()->comment('上學年本地生未招足名額（二技參照學士）');
             $table->unsignedInteger('expanded')->nullable()->comment('本學年教育部核定擴增名額（二技參照學士）');
