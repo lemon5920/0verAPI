@@ -29,6 +29,8 @@ Route::post('/admins/login', 'Auth\Admin\LoginController@AdminLogin');
 
 Route::post('/admins/logout', 'Auth\Admin\LoginController@AdminLogout');
 
+Route::resource('/admins', 'AdminController');
+
 Route::resource('/schools', 'SchoolDataController');
 
 Route::resource('/users', 'SchoolUserController');
