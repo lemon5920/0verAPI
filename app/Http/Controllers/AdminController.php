@@ -30,6 +30,9 @@ class AdminController extends Controller
         if ($user->can('view', $user)) {
             return Admin::all();
         }
+
+        return Admin::where('username', '=', $user->username)
+            ->orWhere('admin', '=', true)->get();
     }
 
     /**
