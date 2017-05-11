@@ -27,7 +27,7 @@ class AdminController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->can('view', $user)) {
+        if ($user->can('list', $user)) {
             return Admin::all();
         }
 
@@ -45,7 +45,13 @@ class AdminController extends Controller
     public function show(Request $request, $id)
     {
         if (Admin::where('username', '=', $id)->exists()) {
-            return Admin::where('username', '=', $id)->first();
+            $data = Admin::where('username', '=', $id)->first();
+
+            $user = Auth::user();
+
+            if ($user->can('view', $data)) {
+                return $data;
+            }
         }
 
         $messages = array('User Data Not Found!');
@@ -61,28 +67,32 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'username' => 'required|string|max:191|unique:admins,username',
-            'password' => 'required|string|min:6',
-            'email' => 'sometimes|nullable|email|unique:admins,email',
-            'chinese_name' => 'required|string',
-            'admin' => 'sometimes|nullable|boolean'
-        ]);
+        $user = Auth::user();
 
-        if($validator->fails()) {
-            $messages = $validator->errors()->all();
-            return response()->json(compact('messages'), 400);
+        if ($user->can('create', Admin::class)) {
+            $validator = Validator::make($request->all(), [
+                'username' => 'required|string|max:191|unique:admins,username',
+                'password' => 'required|string|min:6',
+                'email' => 'sometimes|nullable|email|unique:admins,email',
+                'chinese_name' => 'required|string',
+                'admin' => 'sometimes|nullable|boolean'
+            ]);
+
+            if ($validator->fails()) {
+                $messages = $validator->errors()->all();
+                return response()->json(compact('messages'), 400);
+            }
+
+            $newUser = Admin::create([
+                'username' => $request->username,
+                'password' => Hash::make($request->password),
+                'email' => $request->email,
+                'chinese_name' => $request->chinese_name,
+                'admin' => $request->input('admin', false),
+            ]);
+
+            return response()->json($newUser, 201);
         }
-
-        $newUser = Admin::create([
-            'username' => $request->username,
-            'password' => Hash::make($request->password),
-            'email' => $request->email,
-            'chinese_name' => $request->chinese_name,
-            'admin' => $request->input('admin', false),
-        ]);
-
-        return response()->json($newUser, 201);
     }
 
     /**
@@ -95,24 +105,30 @@ class AdminController extends Controller
     public function update(Request $request, $id)
     {
         if (Admin::where('username', '=', $id)->exists()) {
-            $validator = Validator::make($request->all(), [
-                'password' => 'required|string|min:6',
-                'email' => ['sometimes', 'nullable', 'email', Rule::unique('admins', 'email')->ignore($id, 'username')],
-                'chinese_name' => 'required|string'
-            ]);
+            $data = Admin::where('username', '=', $id)->first();
 
-            if($validator->fails()) {
-                $messages = $validator->errors()->all();
-                return response()->json(compact('messages'), 400);
+            $user = Auth::user();
+
+            if ($user->can('update', $data)) {
+                $validator = Validator::make($request->all(), [
+                    'password' => 'required|string|min:6',
+                    'email' => ['sometimes', 'nullable', 'email', Rule::unique('admins', 'email')->ignore($id, 'username')],
+                    'chinese_name' => 'required|string'
+                ]);
+
+                if ($validator->fails()) {
+                    $messages = $validator->errors()->all();
+                    return response()->json(compact('messages'), 400);
+                }
+
+                Admin::where('username', '=', $id)->update([
+                    'password' => Hash::make($request->password),
+                    'email' => $request->email,
+                    'chinese_name' => $request->chinese_name,
+                ]);
+
+                return Admin::where('username', '=', $id)->first();
             }
-
-            Admin::where('username', '=', $id)->update([
-                'password' => Hash::make($request->password),
-                'email' => $request->email,
-                'chinese_name' => $request->chinese_name,
-            ]);
-
-            return Admin::where('username', '=', $id)->first();
         }
 
         $messages = array('User Data Not Found!');
@@ -129,9 +145,13 @@ class AdminController extends Controller
     public function destroy($id)
     {
         if (Admin::where('username', '=', $id)->exists()) {
-            Admin::where('username', '=', $id)->delete();
+            $user = Auth::user();
 
-            return Admin::withTrashed()->where('username', '=', $id)->first();
+            if ($user->can('update', Admin::class)) {
+                Admin::where('username', '=', $id)->delete();
+
+                return Admin::withTrashed()->where('username', '=', $id)->first();
+            }
         }
 
         $messages = array('User Data Not Found!');

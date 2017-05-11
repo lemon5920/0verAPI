@@ -17,6 +17,17 @@ class AdminPolicy
     }
 
     /**
+     * Determine whether the user can view the all admin user list.
+     *
+     * @param  \App\Admin  $user
+     * @return mixed
+     */
+    public function list(Admin $user)
+    {
+        return (bool)$user->admin == true;
+    }
+
+    /**
      * Determine whether the user can view the admin.
      *
      * @param  \App\Admin  $user
@@ -25,7 +36,7 @@ class AdminPolicy
      */
     public function view(Admin $user, Admin $admin)
     {
-        return (bool)$user->admin == true;
+        return $user->username === $admin->username;
     }
 
     /**
@@ -55,10 +66,9 @@ class AdminPolicy
      * Determine whether the user can delete the admin.
      *
      * @param  \App\Admin  $user
-     * @param  \App\Admin  $admin
      * @return mixed
      */
-    public function delete(Admin $user, Admin $admin)
+    public function delete(Admin $user)
     {
         return (bool)$user->admin == true;
     }
