@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 use Carbon\Carbon;
 
-class SchoolUser extends Authenticatable
+class Admin extends Authenticatable
 {
     use Notifiable, SoftDeletes;
 
-    protected $table = 'school_users';
+    protected $table = 'admins';
 
     protected $primaryKey = 'username';
 
@@ -26,7 +26,7 @@ class SchoolUser extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'email', 'password', 'chinese_name', 'english_name', 'school_code', 'organization', 'phone', 'last_login'
+        'username', 'email', 'password', 'chinese_name', 'admin', 'last_login'
     ];
 
     /**
@@ -35,13 +35,8 @@ class SchoolUser extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'school_code'
+        'password', 'remember_token'
     ];
 
     protected $dates = ['deleted_at'];
-
-    public function school()
-    {
-        return $this->belongsTo('App\SchoolData', 'school_code', 'id');
-    }
 }

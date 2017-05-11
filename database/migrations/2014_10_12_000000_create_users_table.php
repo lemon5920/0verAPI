@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('school_code')->comment('該使用者所屬學校代碼');
             $table->string('organization')->comment('該使用者所屬單位名稱');
             $table->string('phone')->comment('聯絡電話');
-            $table->boolean('admin');
+            $table->boolean('admin')->default(false);
             $table->string('last_login')->nullable()->comment('上次登入時間 YYYY-MM-DD HH:MM:SS');
             $table->string('created_at');
             $table->string('updated_at');
@@ -39,7 +39,7 @@ class CreateUsersTable extends Migration
             $table->string('school_code')->comment('該使用者所屬學校代碼');
             $table->string('organization')->comment('該使用者所屬單位名稱');
             $table->string('phone')->comment('聯絡電話');
-            $table->boolean('admin');
+            $table->boolean('admin')->default(false);
             $table->string('last_login')->nullable()->comment('上次登入時間 YYYY-MM-DD HH:MM:SS');
             $table->string('created_at');
             $table->string('updated_at');
@@ -52,7 +52,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('email')->unique()->nullable();
             $table->string('chinese_name');
-            $table->boolean('admin');
+            $table->boolean('admin')->default(false);
             $table->string('last_login')->nullable()->comment('上次登入時間 YYYY-MM-DD HH:MM:SS');
             $table->string('created_at');
             $table->string('updated_at');
