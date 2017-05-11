@@ -93,6 +93,5 @@ class SchoolDataTableSeeder extends Seeder
                 'updated_at' => Carbon::now()->toIso8601String()
             ]
         ]);
-        */
     }
 }
