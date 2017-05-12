@@ -43,6 +43,7 @@ use Carbon\Carbon;
  * @mixin \Eloquent
  * @property string $last_move 上次動作時間
  * @method static \Illuminate\Database\Query\Builder|\App\SchoolEditor whereLastMove($value)
+ * @property-read \App\User $user
  */
 class SchoolEditor extends Model
 {
