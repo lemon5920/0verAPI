@@ -47,6 +47,7 @@ class CreateSchoolDataTable extends Migration
         Schema::create('school_saved_data', function (Blueprint $table) {
             $table->increments('history_id');
             $table->string('id')->comment('學校代碼');
+            $table->foreign('id')->references('id')->on('school_data');
             $table->string('title')->nullable()->comment('學校名稱');
             $table->string('eng_title')->nullable()->comment('學校英文名稱');
             $table->string('address')->nullable()->comment('學校地址');
@@ -72,6 +73,7 @@ class CreateSchoolDataTable extends Migration
             $table->string('approval_document_of_independent_recruitment')->nullable()->comment('自招核定公文電子檔');
             $table->unsignedInteger('self_limit')->nullable()->comment('自招總額');
             $table->string('modified_by')->comment('按下儲存的人是誰');
+            $table->foreign('modified_by')->references('username')->on('users');
             $table->string('ip_address')->comment('按下儲存的人的IP');
             $table->string('created_at');
             $table->string('updated_at');
@@ -81,6 +83,7 @@ class CreateSchoolDataTable extends Migration
         Schema::create('school_committed_data', function (Blueprint $table) {
             $table->increments('history_id');
             $table->string('id')->comment('學校代碼');
+            $table->foreign('id')->references('id')->on('school_data');
             $table->string('title')->comment('學校名稱');
             $table->string('eng_title')->comment('學校英文名稱');
             $table->string('address')->comment('學校地址');
@@ -106,10 +109,12 @@ class CreateSchoolDataTable extends Migration
             $table->string('approval_document_of_independent_recruitment')->nullable()->comment('自招核定公文電子檔');
             $table->unsignedInteger('self_limit')->nullable()->comment('自招總額');
             $table->string('committed_by')->comment('按下儲存的人是誰');
+            $table->foreign('committed_by')->references('username')->on('users');
             $table->string('ip_address')->comment('按下儲存的人的IP');
             $table->string('review_status')->comment('waiting|confirmed|editing');
             $table->string('reason')->nullable()->comment('讓學校再次修改的原因');
             $table->string('review_by')->comment('海聯審查的人員');
+            $table->foreign('review_by')->references('username')->on('admins');
             $table->string('review_at')->comment('海聯審查的時間點');
             $table->string('created_at');
             $table->string('updated_at');
@@ -124,6 +129,17 @@ class CreateSchoolDataTable extends Migration
      */
     public function down()
     {
+        Schema::table('school_saved_data', function (Blueprint $table) {
+            $table->dropForeign('school_saved_data_id_foreign');
+            $table->dropForeign('school_saved_data_modified_by_foreign');
+        });
+
+        Schema::table('school_committed_data', function (Blueprint $table) {
+            $table->dropForeign('school_committed_data_id_foreign');
+            $table->dropForeign('school_committed_data_committed_by_foreign');
+            $table->dropForeign('school_committed_data_review_by_foreign');
+        });
+
         Schema::dropIfExists('school_saved_data');
         Schema::dropIfExists('school_committed_data');
         Schema::dropIfExists('school_data');
