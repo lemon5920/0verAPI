@@ -108,9 +108,9 @@ class CreateSchoolDataTable extends Migration
             $table->string('approve_no_of_independent_recruitment')->nullable()->comment('自招核定文號');
             $table->string('approval_document_of_independent_recruitment')->nullable()->comment('自招核定公文電子檔');
             $table->unsignedInteger('self_limit')->nullable()->comment('自招總額');
-            $table->string('committed_by')->comment('按下儲存的人是誰');
+            $table->string('committed_by')->comment('按下送出的人是誰');
             $table->foreign('committed_by')->references('username')->on('users');
-            $table->string('ip_address')->comment('按下儲存的人的IP');
+            $table->string('ip_address')->comment('按下送出的人的IP');
             $table->string('review_status')->comment('waiting|confirmed|editing');
             $table->string('reason')->nullable()->comment('讓學校再次修改的原因');
             $table->string('replied_by')->comment('海聯回覆的人員');
