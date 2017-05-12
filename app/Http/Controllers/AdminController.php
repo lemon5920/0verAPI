@@ -7,7 +7,6 @@ use Validator;
 use Hash;
 use Auth;
 use DB;
-use Illuminate\Validation\Rule;
 
 use App\User;
 use App\Admin;
