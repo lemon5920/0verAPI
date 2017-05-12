@@ -37,7 +37,7 @@ Route::resource('/admins', 'AdminController');
 
 Route::resource('/schools', 'SchoolDataController');
 
-Route::resource('/users', 'SchoolUserController');
+//Route::resource('/users', 'SchoolUserController');
 
 Route::post('/personal-and-priority-data-importer', 'PersonalAndPriorityDataImportController@import');
 

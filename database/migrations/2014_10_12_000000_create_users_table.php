@@ -32,7 +32,7 @@ class CreateUsersTable extends Migration
             $table->foreign('username')->references('username')->on('users');
             $table->string('school_code')->comment('該使用者所屬學校代碼');
             $table->string('organization')->comment('該使用者所屬單位名稱');
-            $table->boolean('admin')->default(false);
+            $table->boolean('admin')->default(0);
             $table->string('last_move')->nullable()->comment('上次動作時間');
             $table->string('created_at');
             $table->string('updated_at');
@@ -44,7 +44,7 @@ class CreateUsersTable extends Migration
             $table->foreign('username')->references('username')->on('users');
             $table->string('school_code')->comment('該使用者所屬學校代碼');
             $table->string('organization')->comment('該使用者所屬單位名稱');
-            $table->boolean('admin')->default(false);
+            $table->boolean('admin')->default(0);
             $table->string('last_move')->nullable()->comment('上次動作時間');
             $table->string('created_at');
             $table->string('updated_at');
@@ -54,7 +54,7 @@ class CreateUsersTable extends Migration
         Schema::create('admins', function (Blueprint $table) {
             $table->string('username')->unique();
             $table->foreign('username')->references('username')->on('users');
-            $table->boolean('admin')->default(false);
+            $table->boolean('admin')->default(0);
             $table->string('last_move')->nullable()->comment('上次動作時間');
             $table->string('created_at');
             $table->string('updated_at');

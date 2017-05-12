@@ -6,15 +6,17 @@ use Illuminate\Http\Request;
 use Validator;
 use Hash;
 use Auth;
+use DB;
 use Illuminate\Validation\Rule;
 
+use App\User;
 use App\Admin;
 
 class AdminController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:admin');
+        $this->middleware('auth');
     }
 
     /**
@@ -27,12 +29,14 @@ class AdminController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->can('list', $user)) {
-            return Admin::all();
+        if ($user->can('list', User::class)) {
+            return User::has('admin')->with('admin')->get();
         }
 
-        return Admin::where('username', '=', $user->username)
-            ->orWhere('admin', '=', true)->get();
+        return User::whereHas('admin', function ($query) use ($user) {
+            $query->where('username', '=', $user->username)->orWhere('admin', '=', true);
+        })->with('admin')->get();
+
     }
 
     /**
@@ -44,8 +48,8 @@ class AdminController extends Controller
      */
     public function show(Request $request, $id)
     {
-        if (Admin::where('username', '=', $id)->exists()) {
-            $data = Admin::where('username', '=', $id)->first();
+        if (User::where('username', '=', $id)->has('admin')->exists()) {
+            $data = User::where('username', '=', $id)->with('admin')->first();
 
             $user = Auth::user();
 
@@ -69,30 +73,40 @@ class AdminController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->can('create', Admin::class)) {
-            $validator = Validator::make($request->all(), [
-                'username' => 'required|string|max:191|unique:admins,username',
-                'password' => 'required|string|min:6',
-                'email' => 'sometimes|nullable|email|unique:admins,email',
-                'chinese_name' => 'required|string',
-                'admin' => 'sometimes|nullable|boolean'
-            ]);
+        $this->authorize('create', User::class);
 
-            if ($validator->fails()) {
-                $messages = $validator->errors()->all();
-                return response()->json(compact('messages'), 400);
-            }
+        $validator = Validator::make($request->all(), [
+            'username' => 'required|string|max:191|unique:admins,username|unique:users,username',
+            'password' => 'required|string|min:6',
+            'email' => 'sometimes|nullable|email',
+            'chinese_name' => 'required|string',
+            'english_name' => 'required|string',
+            'phone' => 'required|string',
+            'admin' => 'sometimes|required|boolean'
+        ]);
 
-            $newUser = Admin::create([
+        if ($validator->fails()) {
+            $messages = $validator->errors()->all();
+            return response()->json(compact('messages'), 400);
+        }
+
+        return DB::transaction(function () use ($request){
+            User::create([
                 'username' => $request->username,
                 'password' => Hash::make($request->password),
                 'email' => $request->email,
                 'chinese_name' => $request->chinese_name,
-                'admin' => $request->input('admin', false),
+                'english_name' => $request->english_name,
+                'phone' => $request->phone,
             ]);
 
-            return response()->json($newUser, 201);
-        }
+            Admin::create([
+                'username' => $request->username,
+                'admin' => $request->input('admin', 0),
+            ]);
+
+            return User::where('username', '=', $request->username)->with('admin')->first();
+        });
     }
 
     /**
@@ -104,17 +118,19 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (Admin::where('username', '=', $id)->exists()) {
-            $data = Admin::where('username', '=', $id)->first();
+        if (User::where('username', '=', $id)->exists()) {
+            $data = User::where('username', '=', $id)->first();
 
             $user = Auth::user();
 
             if ($user->can('update', $data)) {
                 $validator = Validator::make($request->all(), [
                     'password' => 'sometimes|required|string|min:6',
-                    'email' => ['sometimes', 'nullable', 'email', Rule::unique('admins', 'email')->ignore($id, 'username')],
+                    'email' => 'sometimes|nullable|email',
                     'chinese_name' => 'sometimes|required|string',
-                    'admin' => 'sometimes|nullable|boolean'
+                    'english_name' => 'sometimes|required|string',
+                    'phone' => 'sometimes|required|string',
+                    'admin' => 'sometimes|required|boolean'
                 ]);
 
                 if ($validator->fails()) {
@@ -122,35 +138,37 @@ class AdminController extends Controller
                     return response()->json(compact('messages'), 400);
                 }
 
-                $updateData = array();
+                return DB::transaction(function () use ($request, $user, $id){
+                    $updateData = array();
 
-                if ($request->has('password')) {
-                    $updateData += array(
-                        'password' => Hash::make($request->password)
-                    );
-                }
+                    if ($request->has('password')) {
+                        $updateData += array(
+                            'password' => Hash::make($request->password)
+                        );
+                    }
 
-                if ($request->has('email')) {
-                    $updateData += array(
-                        'email' => $request->email
-                    );
-                }
+                    if ($request->has('email')) {
+                        $updateData += array(
+                            'email' => $request->email
+                        );
+                    }
 
-                if ($request->has('chinese_name')) {
-                    $updateData += array(
-                        'chinese_name' => $request->chinese_name
-                    );
-                }
+                    if ($request->has('chinese_name')) {
+                        $updateData += array(
+                            'chinese_name' => $request->chinese_name
+                        );
+                    }
 
-                if ($request->has('admin') && (bool)$user->admin && $user->username != $id) {
-                    $updateData += array(
-                        'admin' => $request->input('admin', false),
-                    );
-                }
+                    User::where('username', '=', $id)->update($updateData);
 
-                Admin::where('username', '=', $id)->update($updateData);
+                    if ($request->has('admin') && (bool)$user->admin->admin && $user->username != $id) {
+                        Admin::where('username', '=', $id)->update([
+                            'admin' => $request->input('admin', 0)
+                        ]);
+                    }
 
-                return Admin::where('username', '=', $id)->first();
+                    return User::where('username', '=', $id)->with('admin')->first();
+                });
             }
         }
 
@@ -167,13 +185,19 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        if (Admin::where('username', '=', $id)->exists()) {
-            $user = Auth::user();
+        $user = Auth::user();
 
-            if ($user->can('update', Admin::class) && $user->username != $id) {
-                Admin::where('username', '=', $id)->delete();
+        if ($user->username == $id) {
+            $messages = array('Can\'t Delete YourSelf!');
 
-                return Admin::withTrashed()->where('username', '=', $id)->first();
+            return response()->json(compact('messages'), 400);
+        }
+
+        if (User::where('username', '=', $id)->exists()) {
+            if ($user->can('update', User::class)) {
+                User::where('username', '=', $id)->delete();
+
+                return User::withTrashed()->where('username', '=', $id)->first();
             }
         }
 
