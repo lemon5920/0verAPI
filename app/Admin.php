@@ -32,6 +32,8 @@ use Carbon\Carbon;
  * @method static \Illuminate\Database\Query\Builder|\App\Admin whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Admin whereUsername($value)
  * @mixin \Eloquent
+ * @property string $last_move 上次動作時間
+ * @method static \Illuminate\Database\Query\Builder|\App\Admin whereLastMove($value)
  */
 class Admin extends Model
 {
@@ -60,4 +62,9 @@ class Admin extends Model
     ];
 
     protected $dates = ['deleted_at'];
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'username', 'username');
+    }
 }

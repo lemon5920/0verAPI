@@ -28,7 +28,7 @@ class CreateUsersTable extends Migration
         });
 
         Schema::create('school_editors', function (Blueprint $table) {
-            $table->string('username');
+            $table->string('username')->unique();
             $table->foreign('username')->references('username')->on('users');
             $table->string('school_code')->comment('該使用者所屬學校代碼');
             $table->string('organization')->comment('該使用者所屬單位名稱');
@@ -40,7 +40,7 @@ class CreateUsersTable extends Migration
         });
 
         Schema::create('school_reviewers', function (Blueprint $table) {
-            $table->string('username');
+            $table->string('username')->unique();
             $table->foreign('username')->references('username')->on('users');
             $table->string('school_code')->comment('該使用者所屬學校代碼');
             $table->string('organization')->comment('該使用者所屬單位名稱');
@@ -52,7 +52,7 @@ class CreateUsersTable extends Migration
         });
 
         Schema::create('admins', function (Blueprint $table) {
-            $table->string('username');
+            $table->string('username')->unique();
             $table->foreign('username')->references('username')->on('users');
             $table->boolean('admin')->default(false);
             $table->string('last_move')->nullable()->comment('上次動作時間');

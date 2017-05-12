@@ -41,6 +41,8 @@ use Carbon\Carbon;
  * @method static \Illuminate\Database\Query\Builder|\App\SchoolReviewer whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\SchoolReviewer whereUsername($value)
  * @mixin \Eloquent
+ * @property string $last_move 上次動作時間
+ * @method static \Illuminate\Database\Query\Builder|\App\SchoolReviewer whereLastMove($value)
  */
 class SchoolReviewer extends Model
 {
@@ -69,6 +71,11 @@ class SchoolReviewer extends Model
     ];
 
     protected $dates = ['deleted_at'];
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'username', 'username');
+    }
 
     public function school()
     {

@@ -33,6 +33,10 @@ use Carbon\Carbon;
  * @method static \Illuminate\Database\Query\Builder|\App\SystemData whereSystem($value)
  * @method static \Illuminate\Database\Query\Builder|\App\SystemData whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string $description 學制描述
+ * @property string $eng_description 學制描述
+ * @method static \Illuminate\Database\Query\Builder|\App\SystemData whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\SystemData whereEngDescription($value)
  */
 class SystemData extends Model
 {

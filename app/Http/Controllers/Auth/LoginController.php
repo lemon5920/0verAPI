@@ -71,7 +71,8 @@ class LoginController extends Controller
             return response()->json(['messages' => ['invalid credentials']], 401);
         }
 
-        return response()->json(User::where('username', '=', $credentials['username'])->first());
+        return User::where('username', '=', $credentials['username'])
+            ->with('admin', 'school_editor', 'school_reviewer')->first();
     }
 
     /*

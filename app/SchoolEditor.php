@@ -41,6 +41,8 @@ use Carbon\Carbon;
  * @method static \Illuminate\Database\Query\Builder|\App\SchoolEditor whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\SchoolEditor whereUsername($value)
  * @mixin \Eloquent
+ * @property string $last_move 上次動作時間
+ * @method static \Illuminate\Database\Query\Builder|\App\SchoolEditor whereLastMove($value)
  */
 class SchoolEditor extends Model
 {
@@ -69,6 +71,11 @@ class SchoolEditor extends Model
     ];
 
     protected $dates = ['deleted_at'];
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'username', 'username');
+    }
 
     public function school()
     {

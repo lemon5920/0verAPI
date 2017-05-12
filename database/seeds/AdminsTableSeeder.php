@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Seeder;
 
-use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 
 class AdminsTableSeeder extends Seeder
@@ -17,9 +16,6 @@ class AdminsTableSeeder extends Seeder
         DB::table('admins')->insert([
             [
                 'username' => 'admin1',
-                'password' => Hash::make('admin123!@#'),
-                'email' => 'a@a.a',
-                'chinese_name' => '管理者一號',
                 'admin' => true,
                 'created_at' => Carbon::now()->toIso8601String(),
                 'updated_at' => Carbon::now()->toIso8601String()
@@ -27,9 +23,6 @@ class AdminsTableSeeder extends Seeder
 
             [
                 'username' => 'admin2',
-                'password' => Hash::make('admin123!@#'),
-                'email' => 'b@a.a',
-                'chinese_name' => '管理者二號',
                 'admin' => false,
                 'created_at' => Carbon::now()->toIso8601String(),
                 'updated_at' => Carbon::now()->toIso8601String()
@@ -37,9 +30,6 @@ class AdminsTableSeeder extends Seeder
 
             [
                 'username' => 'admin3',
-                'password' => Hash::make('admin123!@#'),
-                'email' => 'a@b.a',
-                'chinese_name' => '管理者三號',
                 'admin' => false,
                 'created_at' => Carbon::now()->toIso8601String(),
                 'updated_at' => Carbon::now()->toIso8601String()
