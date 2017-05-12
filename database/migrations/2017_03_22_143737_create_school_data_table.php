@@ -140,7 +140,8 @@ class CreateSchoolDataTable extends Migration
         Schema::table('school_committed_data', function (Blueprint $table) {
             $table->dropForeign('school_committed_data_id_foreign');
             $table->dropForeign('school_committed_data_committed_by_foreign');
-            $table->dropForeign('school_committed_data_review_by_foreign');
+            $table->dropForeign('school_committed_data_replied_by_foreign');
+            $table->dropForeign('school_committed_data_confirmed_by_foreign');
         });
 
         Schema::dropIfExists('school_saved_data');
