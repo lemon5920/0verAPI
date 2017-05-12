@@ -111,9 +111,10 @@ class AdminController extends Controller
 
             if ($user->can('update', $data)) {
                 $validator = Validator::make($request->all(), [
-                    'password' => 'required|string|min:6',
+                    'password' => 'sometimes|required|string|min:6',
                     'email' => ['sometimes', 'nullable', 'email', Rule::unique('admins', 'email')->ignore($id, 'username')],
-                    'chinese_name' => 'required|string'
+                    'chinese_name' => 'sometimes|required|string',
+                    'admin' => 'sometimes|nullable|boolean'
                 ]);
 
                 if ($validator->fails()) {
@@ -121,11 +122,33 @@ class AdminController extends Controller
                     return response()->json(compact('messages'), 400);
                 }
 
-                Admin::where('username', '=', $id)->update([
-                    'password' => Hash::make($request->password),
-                    'email' => $request->email,
-                    'chinese_name' => $request->chinese_name,
-                ]);
+                $updateData = array();
+
+                if ($request->has('password')) {
+                    $updateData += array(
+                        'password' => Hash::make($request->password)
+                    );
+                }
+
+                if ($request->has('email')) {
+                    $updateData += array(
+                        'email' => $request->email
+                    );
+                }
+
+                if ($request->has('chinese_name')) {
+                    $updateData += array(
+                        'chinese_name' => $request->chinese_name
+                    );
+                }
+
+                if ($request->has('admin') && (bool)$user->admin && $user->username != $id) {
+                    $updateData += array(
+                        'admin' => $request->input('admin', false),
+                    );
+                }
+
+                Admin::where('username', '=', $id)->update($updateData);
 
                 return Admin::where('username', '=', $id)->first();
             }
@@ -147,7 +170,7 @@ class AdminController extends Controller
         if (Admin::where('username', '=', $id)->exists()) {
             $user = Auth::user();
 
-            if ($user->can('update', Admin::class)) {
+            if ($user->can('update', Admin::class) && $user->username != $id) {
                 Admin::where('username', '=', $id)->delete();
 
                 return Admin::withTrashed()->where('username', '=', $id)->first();
