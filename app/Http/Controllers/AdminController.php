@@ -29,7 +29,7 @@ class AdminController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->can('list', User::class)) {
+        if ($user->can('list_admin', User::class)) {
             return User::has('admin')->with('admin')->get();
         }
 
@@ -53,7 +53,7 @@ class AdminController extends Controller
 
             $user = Auth::user();
 
-            if ($user->can('view', $data)) {
+            if ($user->can('view_admin', $data)) {
                 return $data;
             }
         }
@@ -73,7 +73,7 @@ class AdminController extends Controller
     {
         $user = Auth::user();
 
-        $this->authorize('create', User::class);
+        $this->authorize('create_admin', User::class);
 
         $validator = Validator::make($request->all(), [
             'username' => 'required|string|max:191|unique:admins,username|unique:users,username',
@@ -90,7 +90,7 @@ class AdminController extends Controller
             return response()->json(compact('messages'), 400);
         }
 
-        return DB::transaction(function () use ($request){
+        return DB::transaction(function () use ($request) {
             User::create([
                 'username' => $request->username,
                 'password' => Hash::make($request->password),
@@ -123,7 +123,7 @@ class AdminController extends Controller
 
             $user = Auth::user();
 
-            if ($user->can('update', $data)) {
+            if ($user->can('update_admin', $data)) {
                 $validator = Validator::make($request->all(), [
                     'password' => 'sometimes|required|string|min:6',
                     'email' => 'sometimes|nullable|email',
@@ -138,7 +138,7 @@ class AdminController extends Controller
                     return response()->json(compact('messages'), 400);
                 }
 
-                return DB::transaction(function () use ($request, $user, $id){
+                return DB::transaction(function () use ($request, $user, $id) {
                     $updateData = array();
 
                     if ($request->has('password')) {
@@ -194,7 +194,7 @@ class AdminController extends Controller
         }
 
         if (User::where('username', '=', $id)->exists()) {
-            if ($user->can('update', User::class)) {
+            if ($user->can('delete_admin', User::class)) {
                 User::where('username', '=', $id)->delete();
 
                 return User::withTrashed()->where('username', '=', $id)->first();
