@@ -2,8 +2,7 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use Carbon\Carbon;
@@ -43,15 +42,11 @@ use Carbon\Carbon;
  * @method static \Illuminate\Database\Query\Builder|\App\SchoolEditor whereUsername($value)
  * @mixin \Eloquent
  */
-class SchoolEditor extends Authenticatable
+class SchoolEditor extends Model
 {
-    use Notifiable, SoftDeletes;
+    use SoftDeletes;
 
     protected $table = 'school_editors';
-
-    protected $primaryKey = 'username';
-
-    public $incrementing = false;
 
     protected $dateFormat = Carbon::ISO8601;
 
@@ -61,7 +56,7 @@ class SchoolEditor extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'email', 'password', 'chinese_name', 'english_name', 'school_code', 'organization', 'phone', 'admin', 'last_login'
+        'username', 'school_code', 'organization', 'admin', 'last_move'
     ];
 
     /**
@@ -70,7 +65,7 @@ class SchoolEditor extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'school_code'
+        'username', 'password', 'remember_token', 'school_code'
     ];
 
     protected $dates = ['deleted_at'];

@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+
+use Auth;
+use Validator;
+use App\User;
 
 class LoginController extends Controller
 {
@@ -20,6 +25,11 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
+    public function username()
+    {
+        return 'username';
+    }
+
     /**
      * Where to redirect users after login.
      *
@@ -34,6 +44,43 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => 'logout']);
+        $this->middleware('guest', ['except' => ['logout', 'UserLogout']]);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Manual Login
+    |--------------------------------------------------------------------------
+    */
+    public function UserLogin(Request $request)
+    {
+        // grab credentials from the request
+        $credentials = $request->only('username', 'password');
+
+        $validator = Validator::make($credentials, [
+            'username' => 'required|string',
+            'password' => 'required|string'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['messages' => ['invalid credentials']], 401);
+        }
+
+        // attempt to verify the credentials and create a token for the user
+        if (!Auth::attempt(['username' => $credentials['username'], 'password' => $credentials['password'], 'deleted_at' => NULL])) {
+            return response()->json(['messages' => ['invalid credentials']], 401);
+        }
+
+        return response()->json(User::where('username', '=', $credentials['username'])->first());
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Manual Logout
+    |--------------------------------------------------------------------------
+    */
+    public function UserLogout()
+    {
+        Auth::logout();
     }
 }

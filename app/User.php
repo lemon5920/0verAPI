@@ -4,6 +4,9 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+use Carbon\Carbon;
 
 /**
  * App\User
@@ -13,7 +16,15 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  */
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, SoftDeletes;
+
+    protected $table = 'users';
+
+    protected $primaryKey = 'username';
+
+    public $incrementing = false;
+
+    protected $dateFormat = Carbon::ISO8601;
 
     /**
      * The attributes that are mass assignable.
@@ -21,7 +32,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'username', 'email', 'password', 'chinese_name', 'english_name', 'phone', 'last_login'
     ];
 
     /**
@@ -32,4 +43,6 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    protected $dates = ['deleted_at'];
 }

@@ -2,8 +2,7 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use Carbon\Carbon;
@@ -34,15 +33,11 @@ use Carbon\Carbon;
  * @method static \Illuminate\Database\Query\Builder|\App\Admin whereUsername($value)
  * @mixin \Eloquent
  */
-class Admin extends Authenticatable
+class Admin extends Model
 {
-    use Notifiable, SoftDeletes;
+    use SoftDeletes;
 
     protected $table = 'admins';
-
-    protected $primaryKey = 'username';
-
-    public $incrementing = false;
 
     protected $dateFormat = Carbon::ISO8601;
 
@@ -52,7 +47,7 @@ class Admin extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'email', 'password', 'chinese_name', 'admin', 'last_login'
+        'username', 'admin', 'last_move'
     ];
 
     /**
@@ -61,7 +56,7 @@ class Admin extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token'
+        'username', 'password', 'remember_token'
     ];
 
     protected $dates = ['deleted_at'];

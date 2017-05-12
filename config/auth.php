@@ -45,21 +45,6 @@ return [
             'driver' => 'token',
             'provider' => 'users',
         ],
-
-        'schooleditor' => [
-            'driver' => 'session',
-            'provider' => 'schooleditors',
-        ],
-
-        'schoolreviewer' => [
-            'driver' => 'session',
-            'provider' => 'schoolreviewers',
-        ],
-
-        'admin' => [
-            'driver' => 'session',
-            'provider' => 'admins',
-        ],
     ],
 
     /*
@@ -89,21 +74,6 @@ return [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
-
-        'schooleditors' => [
-            'driver' => 'eloquent',
-            'model' => App\SchoolEditor::class,
-        ],
-
-        'schoolreviewers' => [
-            'driver' => 'eloquent',
-            'model' => App\SchoolReviewer::class,
-        ],
-
-        'admins' => [
-            'driver' => 'eloquent',
-            'model' => App\Admin::class,
-        ]
     ],
 
     /*
@@ -127,24 +97,6 @@ return [
             'table' => 'password_resets',
             'expire' => 60,
         ],
-
-        'schooleditors' => [
-            'provider' => 'schooleditors',
-            'table' => 'password_resets',
-            'expire' => 60,
-        ],
-
-        'schoolreviewers' => [
-            'provider' => 'schoolreviewers',
-            'table' => 'password_resets',
-            'expire' => 60,
-        ],
-
-        'admins' => [
-            'provider' => 'admins',
-            'table' => 'password_resets',
-            'expire' => 60,
-        ]
     ],
 
 ];
