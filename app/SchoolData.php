@@ -107,8 +107,6 @@ class SchoolData extends Model
         'scholarship_dept', //獎學金負責單位名稱
         'eng_scholarship_dept', //獎學金負責單位英文名稱
         'five_year_allowed', //[中五]我可以招呢
-        'five_year_prepare', //[中五]我準備招了喔
-        'five_year_confirmed_by', //[中五](school code)
         'five_year_rule', //[中五]給海聯看的學則
         'approve_no_of_independent_recruitment', //自招核定文號
         'approval_document_of_independent_recruitment', //自招核定公文電子檔
