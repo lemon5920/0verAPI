@@ -43,10 +43,6 @@ class CreateSchoolDataTable extends Migration
             $table->string('updated_at');
             $table->string('deleted_at')->nullable();
         });
-
-        Schema::table('school_data', function (Blueprint $table) {
-            $table->foreign('five_year_confirmed_by')->references('username')->on('admins');
-        });
     }
 
     /**
@@ -56,10 +52,6 @@ class CreateSchoolDataTable extends Migration
      */
     public function down()
     {
-        Schema::table('school_data', function (Blueprint $table) {
-            $table->dropForeign('school_data_five_year_confirmed_by_foreign');
-        });
-
         Schema::dropIfExists('school_data');
     }
 }
