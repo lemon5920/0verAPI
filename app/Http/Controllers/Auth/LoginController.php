@@ -83,5 +83,22 @@ class LoginController extends Controller
     public function UserLogout()
     {
         Auth::logout();
+
+        return response()->json(['messages' => ['Logged Out!']]);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Get User Login Status
+    |--------------------------------------------------------------------------
+    */
+    public function UserLoginStatus()
+    {
+        if (Auth::check()) {
+            return User::where('username', '=', Auth::id())
+                ->with('admin', 'school_editor', 'school_reviewer')->first();
+        }
+
+        return response()->json(['messages' => ['Not Logged in!']], 401);
     }
 }

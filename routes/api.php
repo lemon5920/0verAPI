@@ -21,6 +21,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 //Route::auth();
 
+Route::get('/users/login', 'Auth\LoginController@UserLoginStatus');
+
 Route::post('/users/login', 'Auth\LoginController@UserLogin');
 
 Route::post('/users/logout', 'Auth\LoginController@UserLogout');
@@ -28,6 +30,8 @@ Route::post('/users/logout', 'Auth\LoginController@UserLogout');
 Route::resource('/admins', 'AdminController');
 
 Route::resource('/schools', 'SchoolDataController');
+
+Route::resource('/schools.editors', 'SchoolEditorController');
 
 //Route::resource('/users', 'SchoolUserController');
 

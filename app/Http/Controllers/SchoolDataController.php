@@ -60,7 +60,7 @@ class SchoolDataController extends Controller
             'five_year_allowed' => 'required|boolean', //[中五]我可以招呢
             'five_year_rule' => 'required_if:five_year_allowed,1|string', //[中五]給海聯看的學則
             'approve_no_of_independent_recruitment' => 'sometimes|nullable|string', //自招核定文號
-            'approval_document_of_independent_recruitment' => 'required_if:approve_no_of_independent_recruitment,1|string', //自招核定公文電子檔
+            'approval_document_of_independent_recruitment' => 'required_if:approve_no_of_independent_recruitment,1|file|', //自招核定公文電子檔
             'self_limit' => 'required_if:approve_no_of_independent_recruitment,1|nullable|integer|min:0', //自招總額
         ]);
 
