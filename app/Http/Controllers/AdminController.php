@@ -47,7 +47,7 @@ class AdminController extends Controller
      */
     public function show(Request $request, $id)
     {
-        if (User::where('username', '=', $id)->has('admin')->exists()) {
+        if (Admin::where('username', '=', $id)->has('admin')->exists()) {
             $data = User::where('username', '=', $id)->with('admin')->first();
 
             $user = Auth::user();
@@ -117,7 +117,7 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (User::where('username', '=', $id)->exists()) {
+        if (Admin::where('username', '=', $id)->exists()) {
             $data = User::where('username', '=', $id)->first();
 
             $user = Auth::user();
@@ -155,6 +155,18 @@ class AdminController extends Controller
                     if ($request->has('chinese_name')) {
                         $updateData += array(
                             'chinese_name' => $request->chinese_name
+                        );
+                    }
+
+                    if ($request->has('english_name')) {
+                        $updateData += array(
+                            'english_name' => $request->english_name
+                        );
+                    }
+
+                    if ($request->has('phone')) {
+                        $updateData += array(
+                            'phone' => $request->phone
                         );
                     }
 
