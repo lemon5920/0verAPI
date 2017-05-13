@@ -2,17 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\SchoolReviewer;
 use Illuminate\Http\Request;
 
 use Auth;
 use Validator;
+
 use App\SchoolData;
 
 class SchoolDataController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        return Auth::guard('schooleditor')->user();
+        $user = Auth::user();
+
+        if ($user->admin != NULL) {
+            return SchoolData::all();
+        }
+
+        return SchoolData::where('id', '=', $user->school_editor->school_code)->first();
     }
 
     /**
@@ -45,11 +58,10 @@ class SchoolDataController extends Controller
             'scholarship_dept' => 'required_if:scholarship,1|string', //獎學金負責單位名稱
             'eng_scholarship_dept' => 'required_if:scholarship,1|string', //獎學金負責單位英文名稱
             'five_year_allowed' => 'required|boolean', //[中五]我可以招呢
-            'five_year_prepare' => 'required|boolean', //[中五]我準備招了喔
-            'five_year_confirmed_by' => 'required_if:five_year_allowed,1|string|exists:school_users,username', //[中五](school_users.username)
             'five_year_rule' => 'required_if:five_year_allowed,1|string', //[中五]給海聯看的學則
-            'approve_no' => 'sometimes|required|string', //自招核定文號
-            'self_limit' => 'sometimes|required|integer|min:0', //自招總額
+            'approve_no_of_independent_recruitment' => 'sometimes|nullable|string', //自招核定文號
+            'approval_document_of_independent_recruitment' => 'required_if:approve_no_of_independent_recruitment,1|string', //自招核定公文電子檔
+            'self_limit' => 'required_if:approve_no_of_independent_recruitment,1|nullable|integer|min:0', //自招總額
         ]);
 
         if($validator->fails()) {

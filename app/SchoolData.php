@@ -119,9 +119,4 @@ class SchoolData extends Model
     {
         return $this->hasMany('App\DepartmentData', 'school_code', 'id');
     }
-
-    //public function school_users()
-    //{
-    //    return $this->hasMany('App\SchoolUser', 'school_code', 'id');
-    //}
 }
